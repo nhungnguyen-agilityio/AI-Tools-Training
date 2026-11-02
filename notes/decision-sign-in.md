@@ -43,3 +43,10 @@
 - Is Zalo login free, and does it need app review? Zalo's own docs did not load; confirm in the Developer Console.
 - Can Zalo return a phone number or email with extra permission?
 - What share of guests come from mainland China?
+
+## Sources
+- [Q&Me — Vietnam mobile app popularity, Mar 2026 (N=100)](https://cdn.qandme.net/1773712237_Vietnam_mobile_app_popularity_2026_-_13032026.pdf)
+- [Tuoi Tre — Zalo users and terms of service](https://news.tuoitre.vn/vietnams-80-million-user-messaging-giant-zalo-puts-spotlight-on-parent-vngs-business-103251229150347905.htm)
+- [RedAI Zalo SDK auth guide — profile fields](https://unpkg.com/@warriorteam/redai-zalo-sdk@1.11.1/docs/AUTHENTICATION.md)
+- [Unipile — Google OAuth verification](https://www.unipile.com/integrating-google-oauth-2-0-user-authentication-into-your-app/)
+- [China Briefing — Decree 356 summary](https://www.china-briefing.com/china-outbound-news/vietnam-personal-data-protection-regulation-decree-356)
