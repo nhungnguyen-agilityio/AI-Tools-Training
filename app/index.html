@@ -43,7 +43,7 @@
       const guests = Number(document.getElementById('guests').value);
       const nights = Math.round((outDate - inDate) / 86400000);
       if (!(nights > 0)) { error.textContent = 'Check-out must be after check-in.'; return; }
-      if (guests < 1 || guests > 6) { error.textContent = 'Guests: 1–6 only.'; return; }
+      if (guests < 1 || guests > 6) { error.textContent = 'Guests must be between 1 and 6.'; return; }
       const total = nights * RATES[document.getElementById('room').value];
       result.textContent = nights + ' night(s) · Total ' + total.toLocaleString('en-US') + ' VND';
     });
