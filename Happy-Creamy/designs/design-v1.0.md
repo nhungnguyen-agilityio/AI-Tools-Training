@@ -3,7 +3,7 @@
 Short description: Design for the Happy Creamy ice cream ordering app, for desktop and mobile.
 
 ## Design document
-[View the full design](https://claude.ai/artifact/GhytdCr54KxzRif8HNaGM1)
+[View the full design](https://claude.ai/artifact/GhytdCr54KxzRif8HNaGM1#artboard-fd91350171f7)
 
 ## Notes
 - Prices are always shown in VND.
