@@ -1,0 +1,1286 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Happy Creamy - Mobile</title>
+ 
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap">
+<style>
+:root{--ink:#0F4A45;--pink:#1A766E;--pink2:#7FD1C0;--blush:#EEF8F5;--rose:#CFEBE4;--line:#CFE5E0;--muted:#357069;--mint:#D6EEF6;--mintink:#0A5873;--butter:#FFEBB0;--butterink:#7A5000}
+body{margin:0;background:#F6FBF9}
+*{box-sizing:border-box}
+.app{font-family:'Nunito',system-ui,sans-serif;color:var(--ink);-webkit-font-smoothing:antialiased}
+.app h1,.app h2,.app h3,.disp{font-family:'Fredoka','Nunito',sans-serif;font-weight:600;margin:0}
+:where(.app) button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;padding:0;text-align:left}
+.app button:focus-visible,.app a:focus-visible,.app input:focus-visible{outline:2px solid var(--pink);outline-offset:2px}
+:where(.app) a{color:inherit}
+.card.sel{border-color:var(--pink);box-shadow:inset 0 0 0 1px var(--pink)}
+.chip.seg{background:transparent;border-color:transparent}
+.chip.seg.on{background:var(--pink);color:#fff}
+.noscroll{scrollbar-width:none}
+.noscroll::-webkit-scrollbar{display:none}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 22px;border-radius:999px;background:var(--pink);color:#fff;font-weight:800;font-size:16px;text-align:center;text-decoration:none;width:100%}
+.btn:disabled{background:var(--rose);color:var(--muted);cursor:not-allowed}
+.btn.ghost{background:#fff;color:var(--ink);border:1.5px solid var(--line)}
+.btn.soft{background:var(--rose);color:var(--ink)}
+.btn.sm{min-height:44px;font-size:14px;padding:0 16px;width:auto}
+.chip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 16px;border-radius:999px;border:1.5px solid var(--line);background:#fff;font-weight:700;font-size:14px;white-space:nowrap;flex:none}
+.chip.on{background:var(--pink);border-color:var(--pink);color:#fff}
+.opt{display:flex;flex-direction:column;gap:2px;flex:1;min-width:0;min-height:56px;padding:10px 12px;border-radius:16px;border:1.5px solid var(--line);background:#fff;font-weight:800}
+.opt small{font-weight:600;font-size:12px;color:var(--muted)}
+.opt.on{border-color:var(--pink);background:var(--blush);box-shadow:inset 0 0 0 1px var(--pink)}
+.row-opt{display:flex;align-items:center;gap:12px;width:100%;min-height:56px;padding:10px 14px;border-radius:16px;border:1.5px solid var(--line);background:#fff;font-weight:700}
+.row-opt.on{border-color:var(--pink);background:var(--blush);box-shadow:inset 0 0 0 1px var(--pink)}
+.radio{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex:none;background:#fff}
+.on .radio{border:6px solid var(--pink)}
+.check{width:22px;height:22px;border-radius:7px;border:2px solid var(--line);flex:none;background:#fff;display:flex;align-items:center;justify-content:center}
+.on .check{background:var(--pink);border-color:var(--pink)}
+.check svg{opacity:0}.on .check svg{opacity:1}
+.tile{display:flex;align-items:center;justify-content:center;border-radius:20px}
+.t0{background:#D2EDE6}.t1{background:#D8EDF5}.t2{background:#FFF1CF}.t3{background:#CFEBE4}
+.bd{display:inline-block;padding:2px 10px;border-radius:999px;font-weight:800;font-size:11px;letter-spacing:.04em;text-transform:uppercase}
+.bdnew{background:var(--butter);color:var(--butterink)}
+.bdhot{background:var(--pink);color:#fff}
+.bdbest{background:var(--mint);color:var(--mintink)}
+.navbtn{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;min-height:56px;font-size:11px;font-weight:800;color:var(--muted);text-align:center}
+.navbtn svg{stroke:var(--muted)}
+.navbtn.on{color:var(--pink)}
+.navbtn.on svg{stroke:var(--pink)}
+.promo{border-radius:24px;padding:20px;display:flex;flex-direction:column;gap:10px;min-height:168px;justify-content:flex-end}
+.p0{background:linear-gradient(135deg,#A9E4DA,#8DCFE3);color:#0F3A36}
+.p1{background:linear-gradient(135deg,#DDF3EE,#BFE6EA);color:#0F4A45}
+.p2{background:linear-gradient(135deg,#D8EDF5,#B4DDEE);color:#0A4A63}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--line);padding:0}
+.dot.on{width:22px;border-radius:99px;background:var(--pink)}
+.card{border:1.5px solid var(--line);border-radius:20px;background:#fff}
+.stp{width:22px;height:22px;border-radius:50%;border:2px solid var(--line);background:#fff;flex:none;display:flex;align-items:center;justify-content:center}
+.done .stp{background:var(--pink);border-color:var(--pink)}
+.now .stp{border-color:var(--pink);box-shadow:0 0 0 5px var(--rose)}
+.next{color:var(--muted)}
+.field{width:100%;min-height:50px;border-radius:14px;border:1.5px solid var(--line);padding:0 16px;font:inherit;font-size:16px;color:var(--ink);background:#fff}
+.field::placeholder{color:#5F8F89}
+.step{width:40px;height:40px;border-radius:50%;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center;font-weight:800;background:#fff;flex:none}
+.link{color:var(--pink);font-weight:800;text-decoration:underline;text-underline-offset:3px}
+.star{width:52px;height:52px;display:flex;align-items:center;justify-content:center;border-radius:14px;flex:none}
+.star svg{fill:none;stroke:var(--pink);stroke-width:1.8;stroke-linejoin:round}
+.star.on svg{fill:#F5B800;stroke:#C98A00}
+textarea.field{padding:12px 16px;min-height:104px;resize:none;line-height:1.4}
+.ph{width:76px;height:76px;border-radius:16px;position:relative;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:var(--ink)}
+.ph0{background:#BFE6EA}.ph1{background:#FFE9A8}.ph2{background:#CFEBE4}
+.phx{position:absolute;top:-14px;right:-14px;width:44px;height:44px;display:flex;align-items:center;justify-content:center}
+.phx span{width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;line-height:1}
+.msg{padding:10px 14px;border-radius:14px;background:var(--butter);color:var(--butterink);font-weight:700;font-size:14px;line-height:1.4}
+</style>
+ 
+<style>
+html,body{min-height:100%}
+body{display:flex;justify-content:center;align-items:flex-start;padding:24px 0}
+#root .app{border-radius:28px;box-shadow:0 20px 60px rgba(15,74,69,.18);border:1px solid var(--line)}
+@media (max-width:430px){
+  body{padding:0;display:block}
+  #root .app{width:100vw !important;height:100vh !important;height:100dvh !important;border-radius:0;box-shadow:none;border:0}
+}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/template" id="tpl">
+ 
+ 
+<div class="app" style="position:relative;width:390px;height:844px;overflow:hidden;background:#F6FBF9;display:flex;flex-direction:column">
+ 
+<!-- ============ SIGN IN ============ -->
+<sc-if value="{{showAuth}}" hint-placeholder-val="{{ false }}">
+<div class="noscroll" style="position:absolute;inset:0;z-index:30;background:#F6FBF9;overflow-y:auto;padding:36px 24px 28px;display:flex;flex-direction:column;gap:18px">
+  <div style="display:flex;flex-direction:column;align-items:center;gap:6px;padding-top:8px">
+    <div class="tile t0" style="width:112px;height:112px;border-radius:50%">
+      <svg viewBox="0 0 80 80" width="88" height="88" aria-hidden="true">
+        <circle cx="40" cy="32" r="16" fill="#7FD1C0"/>
+        <path d="M26 42 L54 42 L40 76 Z" fill="#E9B56F" stroke="#1A766E" stroke-width="2"/>
+        <circle cx="34" cy="28" r="3" fill="#fff" opacity=".7"/>
+      </svg>
+    </div>
+    <h1 style="font-size:34px;color:var(--pink)">Happy Creamy</h1>
+    <p style="margin:0;text-align:center;color:var(--muted);font-weight:600">Sign in to start scooping.</p>
+  </div>
+ 
+  <sc-if value="{{authForm}}" hint-placeholder-val="{{ true }}">
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <button type="button" class="btn ghost" onClick="{{socialSignIn}}">
+      <span style="width:24px;height:24px;border-radius:50%;background:var(--rose);display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:800">G</span>
+      Continue with Google
+    </button>
+    <button type="button" class="btn ghost" onClick="{{socialSignIn}}">
+      <span style="width:24px;height:24px;border-radius:50%;background:var(--rose);display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:800">f</span>
+      Continue with Facebook
+    </button>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;color:var(--muted);font-weight:700;font-size:13px">
+    <div style="flex:1;height:1px;background:var(--line)"></div>or use email<div style="flex:1;height:1px;background:var(--line)"></div>
+  </div>
+  <div style="display:flex;flex-direction:column;gap:12px">
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <label for="email" style="font-weight:800;font-size:14px">Email</label>
+      <input id="email" class="field" type="email" placeholder="you@example.com" value="{{email}}" onChange="{{setEmail}}">
+    </div>
+    <div style="display:flex;flex-direction:column;gap:6px">
+      <label for="pw" style="font-weight:800;font-size:14px">Password</label>
+      <input id="pw" class="field" type="password" placeholder="At least 8 characters">
+    </div>
+    <button type="button" class="btn" onClick="{{submitAuth}}">{{authCta}}</button>
+    <button type="button" class="link" style="text-align:center;min-height:44px" onClick="{{toggleAuth}}">{{authSwitch}}</button>
+  </div>
+  </sc-if>
+ 
+  <sc-if value="{{authOtp}}" hint-placeholder-val="{{ false }}">
+  <div style="display:flex;flex-direction:column;gap:14px;padding-top:8px">
+    <h2 style="font-size:24px">Check your email</h2>
+    <p style="margin:0;color:var(--muted);font-weight:600;line-height:1.5">We sent a 6-digit code to <b style="color:var(--ink)">{{emailShown}}</b>. Enter it to finish creating your account.</p>
+    <label for="otp" style="font-weight:800;font-size:14px">Verification code</label>
+    <input id="otp" class="field" inputmode="numeric" maxlength="6" placeholder="000000" style="letter-spacing:.5em;font-size:24px;text-align:center;font-weight:800" value="{{otp}}" onChange="{{setOtp}}">
+    <button type="button" class="btn" disabled="{{otpBlocked}}" onClick="{{verifyOtp}}">Verify and sign in</button>
+    <p style="margin:0;color:var(--muted);font-size:13px;font-weight:600;text-align:center">Demo: type any 6 digits.</p>
+  </div>
+  </sc-if>
+</div>
+</sc-if>
+ 
+<!-- ============ MAIN APP ============ -->
+<div class="noscroll" style="flex:1;min-height:0;overflow-y:auto;position:relative">
+ 
+  <!-- HOME -->
+  <sc-if value="{{isHome}}" hint-placeholder-val="{{ true }}">
+  <div style="padding:22px 20px 28px;display:flex;flex-direction:column;gap:22px">
+    <div style="display:flex;align-items:center;justify-content:space-between">
+      <div>
+        <h1 style="font-size:26px;color:var(--pink)">Happy Creamy</h1>
+        <div style="font-weight:700;color:var(--muted);font-size:14px">Hi, Nhung! What are we scooping today?</div>
+      </div>
+    </div>
+ 
+    <div>
+      <div class="promo {{slide.cls}}">
+        <span class="bd bdnew" style="align-self:flex-start">{{slide.tag}}</span>
+        <h2 style="font-size:26px;line-height:1.1">{{slide.title}}</h2>
+        <div style="font-weight:700;font-size:14px;opacity:.9">{{slide.sub}}</div>
+        <button type="button" class="btn sm" style="align-self:flex-start;margin-top:4px" onClick="{{goOrderNow}}">Order now</button>
+      </div>
+      <div style="display:flex;justify-content:center;gap:4px;margin-top:6px">
+        <sc-for list="{{dots}}" as="d" hint-placeholder-count="3">
+          <button type="button" class="dot {{d.cls}}" aria-label="{{d.aria}}" onClick="{{d.pick}}" style="min-width:8px;margin:0 3px"></button>
+        </sc-for>
+      </div>
+    </div>
+ 
+    <div>
+      <h3 style="font-size:19px;margin-bottom:12px">Quick picks</h3>
+      <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px">
+        <sc-for list="{{quick}}" as="q" hint-placeholder-count="4">
+          <button type="button" onClick="{{q.pick}}" style="display:flex;flex-direction:column;align-items:center;gap:6px;min-height:44px;text-align:center">
+            <span class="tile {{q.t}}" style="width:68px;height:68px;border-radius:50%">
+              <svg viewBox="0 0 80 80" width="48" height="48" aria-hidden="true">
+                <circle cx="{{q.a.s1x}}" cy="{{q.a.s1y}}" r="{{q.a.s1r}}" fill="{{q.a.s1c}}"/>
+                <circle cx="{{q.a.s2x}}" cy="{{q.a.s2y}}" r="{{q.a.s2r}}" fill="{{q.a.s2c}}"/>
+                <path d="{{q.a.base}}" fill="{{q.a.baseFill}}" stroke="#1A766E" stroke-width="2"/>
+                <path d="{{q.a.top}}" fill="{{q.a.topFill}}" stroke="#1A766E" stroke-width="2"/>
+              </svg>
+            </span>
+            <span style="font-weight:800;font-size:12px;line-height:1.15">{{q.label}}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+ 
+    <div style="display:flex;gap:10px;align-items:center;padding:12px 14px;border-radius:16px;background:var(--mint);color:var(--mintink);font-weight:700;font-size:13.5px;line-height:1.35">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0A5873" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 7h11v9H3zM14 10h4l3 3v3h-7"/><circle cx="7" cy="18" r="1.6"/><circle cx="17" cy="18" r="1.6"/></svg>
+      <span>We deliver up to 10 km from our shops, during opening hours. Pick-up is always free.</span>
+    </div>
+ 
+    <div>
+      <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:12px">
+        <h3 style="font-size:19px">Best-sellers</h3>
+        <button type="button" class="link" style="min-height:44px;font-size:14px" onClick="{{goBest}}">See all</button>
+      </div>
+      <div class="noscroll" style="display:flex;gap:12px;overflow-x:auto;margin:0 -20px;padding:0 20px 4px">
+        <sc-for list="{{bestsellers}}" as="p" hint-placeholder-count="3">
+          <button type="button" class="card" onClick="{{p.open}}" style="flex:none;width:150px;padding:10px;display:flex;flex-direction:column;gap:8px">
+            <span class="tile {{p.t}}" style="height:100px">
+              <svg viewBox="0 0 80 80" width="72" height="72" aria-hidden="true">
+                <circle cx="{{p.a.s1x}}" cy="{{p.a.s1y}}" r="{{p.a.s1r}}" fill="{{p.a.s1c}}"/>
+                <circle cx="{{p.a.s2x}}" cy="{{p.a.s2y}}" r="{{p.a.s2r}}" fill="{{p.a.s2c}}"/>
+                <path d="{{p.a.base}}" fill="{{p.a.baseFill}}" stroke="#1A766E" stroke-width="2"/>
+                <path d="{{p.a.top}}" fill="{{p.a.topFill}}" stroke="#1A766E" stroke-width="2"/>
+              </svg>
+            </span>
+            <span style="font-weight:800;font-size:14px;line-height:1.2">{{p.name}}</span>
+            <span style="font-weight:700;font-size:13px;color:var(--muted)">{{p.priceLabel}}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+  </sc-if>
+ 
+  <!-- MENU -->
+  <sc-if value="{{isMenu}}" hint-placeholder-val="{{ false }}">
+  <div style="padding:22px 20px 110px;display:flex;flex-direction:column;gap:16px">
+    <h1 style="font-size:28px">Menu</h1>
+    <div class="noscroll" style="display:flex;gap:8px;overflow-x:auto;margin:0 -20px;padding:0 20px 2px">
+      <sc-for list="{{cats}}" as="c" hint-placeholder-count="7">
+        <button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button>
+      </sc-for>
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px">
+      <sc-for list="{{products}}" as="p" hint-placeholder-count="6">
+        <div class="card" style="padding:10px;display:flex;flex-direction:column;gap:8px;position:relative">
+          <button type="button" class="tile {{p.t}}" onClick="{{p.open}}" aria-label="{{p.aria}}" style="height:112px;width:100%;justify-content:center">
+            <svg viewBox="0 0 80 80" width="82" height="82" aria-hidden="true">
+              <circle cx="{{p.a.s1x}}" cy="{{p.a.s1y}}" r="{{p.a.s1r}}" fill="{{p.a.s1c}}"/>
+              <circle cx="{{p.a.s2x}}" cy="{{p.a.s2y}}" r="{{p.a.s2r}}" fill="{{p.a.s2c}}"/>
+              <path d="{{p.a.base}}" fill="{{p.a.baseFill}}" stroke="#1A766E" stroke-width="2"/>
+              <path d="{{p.a.top}}" fill="{{p.a.topFill}}" stroke="#1A766E" stroke-width="2"/>
+            </svg>
+          </button>
+          <sc-if value="{{p.badge}}" hint-placeholder-val="{{ true }}">
+            <span class="bd {{p.badgeCls}}" style="position:absolute;top:16px;left:16px">{{p.badge}}</span>
+          </sc-if>
+          <div style="font-weight:800;font-size:14px;line-height:1.2;min-height:34px">{{p.name}}</div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:6px">
+            <span style="font-weight:700;font-size:13px;color:var(--muted)">{{p.priceLabel}}</span>
+            <button type="button" aria-label="{{p.aria}}" onClick="{{p.open}}" style="width:44px;height:44px;margin:-6px -6px -6px 0;display:flex;align-items:center;justify-content:center">
+              <span style="width:32px;height:32px;border-radius:50%;background:var(--pink);display:flex;align-items:center;justify-content:center">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>
+              </span>
+            </button>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  </sc-if>
+ 
+  <!-- STORES -->
+  <sc-if value="{{isStores}}" hint-placeholder-val="{{ false }}">
+  <div style="padding:22px 20px 28px;display:flex;flex-direction:column;gap:16px">
+    <h1 style="font-size:28px">Stores</h1>
+    <div style="border-radius:24px;overflow:hidden;border:1.5px solid var(--line);background:#F5FAF8">
+      <svg viewBox="0 0 350 210" width="100%" role="img" aria-label="Map showing three Happy Creamy shops near you" style="display:block">
+        <rect width="350" height="210" fill="#F5FAF8"/>
+        <path d="M-10 150 C80 120 140 170 230 110 S330 70 370 60" stroke="#CFEBE4" stroke-width="18" fill="none"/>
+        <path d="M60 -10 L90 220" stroke="#E3F2EE" stroke-width="12"/>
+        <path d="M200 -10 L170 220" stroke="#E3F2EE" stroke-width="12"/>
+        <path d="M-10 60 L360 80" stroke="#E3F2EE" stroke-width="10"/>
+        <rect x="236" y="130" width="70" height="50" rx="14" fill="#D8EDF5"/>
+        <circle cx="175" cy="105" r="22" fill="#7FD1C0" opacity=".25"/>
+        <circle cx="175" cy="105" r="8" fill="#0F4A45" stroke="#fff" stroke-width="3"/>
+        <sc-for list="{{pins}}" as="m" hint-placeholder-count="3">
+          <g>
+            <circle cx="{{m.x}}" cy="{{m.y}}" r="{{m.r}}" fill="{{m.fill}}" stroke="#fff" stroke-width="3"/>
+            <circle cx="{{m.x}}" cy="{{m.y}}" r="4" fill="#fff"/>
+          </g>
+        </sc-for>
+      </svg>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:12px">
+      <sc-for list="{{branches}}" as="b" hint-placeholder-count="3">
+        <div class="card {{b.cls}}" style="padding:14px;display:flex;flex-direction:column;gap:10px">
+          <button type="button" onClick="{{b.pick}}" style="display:flex;flex-direction:column;gap:4px;min-height:44px">
+            <span style="display:flex;align-items:center;justify-content:space-between;gap:8px">
+              <span style="font-weight:800;font-size:16px">{{b.name}}</span>
+              <span style="font-weight:800;font-size:13px;color:var(--muted)">{{b.km}} km</span>
+            </span>
+            <span style="font-weight:600;font-size:13.5px;color:var(--muted)">{{b.addr}}</span>
+            <span class="bd {{b.stCls}}" style="align-self:flex-start;margin-top:2px">{{b.status}}</span>
+          </button>
+          <div style="display:flex;gap:8px">
+            <a class="btn sm" href="https://www.google.com/maps" style="flex:1">Get directions</a>
+            <a class="btn sm ghost" href="tel:" style="flex:1">Call store</a>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+  </div>
+  </sc-if>
+ 
+  <!-- ACCOUNT -->
+  <sc-if value="{{isAccount}}" hint-placeholder-val="{{ false }}">
+  <div style="padding:22px 20px 28px;display:flex;flex-direction:column;gap:18px">
+    <h1 style="font-size:28px">Account</h1>
+    <div style="display:flex;align-items:center;gap:14px">
+      <div class="tile t3" style="width:60px;height:60px;border-radius:50%;font-family:Fredoka;font-weight:600;font-size:24px;color:var(--pink)">N</div>
+      <div style="min-width:0">
+        <div style="font-weight:800;font-size:18px">Nhung Nguyen</div>
+        <div style="font-weight:600;font-size:14px;color:var(--muted);overflow:hidden;text-overflow:ellipsis">{{emailShown}}</div>
+      </div>
+    </div>
+ 
+    <div style="display:flex;gap:8px">
+      <button type="button" class="chip {{tabActiveCls}}" onClick="{{showActive}}">Active orders</button>
+      <button type="button" class="chip {{tabHistCls}}" onClick="{{showHistory}}">Order history</button>
+    </div>
+ 
+    <sc-if value="{{showActiveList}}" hint-placeholder-val="{{ true }}">
+      <sc-if value="{{hasActive}}" hint-placeholder-val="{{ false }}">
+        <button type="button" class="card" onClick="{{openTracking}}" style="padding:14px;display:flex;flex-direction:column;gap:6px;background:var(--blush)">
+          <span style="display:flex;justify-content:space-between;font-weight:800"><span>Order {{placed.id}}</span><span>{{placed.totalLabel}}</span></span>
+          <span style="font-weight:600;font-size:14px;color:var(--muted)">{{placed.typeLabel}} · {{placed.count}} items</span>
+          <span class="bd bdbest" style="align-self:flex-start">{{statusLabel}}</span>
+          <span class="link" style="font-size:14px">Track this order</span>
+        </button>
+      </sc-if>
+      <sc-if value="{{noActive}}" hint-placeholder-val="{{ false }}">
+        <div class="card" style="padding:20px;display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+          <div style="font-weight:800;font-size:16px">No orders on the way</div>
+          <div style="font-weight:600;color:var(--muted);font-size:14px">Feeling something cold?</div>
+          <button type="button" class="btn sm" onClick="{{goOrderNow}}">Browse the menu</button>
+        </div>
+      </sc-if>
+    </sc-if>
+ 
+    <sc-if value="{{showHistoryList}}" hint-placeholder-val="{{ false }}">
+      <div style="display:flex;flex-direction:column;gap:10px">
+        <sc-for list="{{history}}" as="h" hint-placeholder-count="3">
+          <div class="card" style="padding:14px;display:flex;flex-direction:column;gap:4px">
+            <span style="display:flex;justify-content:space-between;font-weight:800"><span>{{h.title}}</span><span>{{h.total}}</span></span>
+            <span style="font-weight:600;font-size:13.5px;color:var(--muted)">{{h.meta}}</span>
+            <sc-if value="{{h.canRate}}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:8px">
+                <span style="font-size:13px;font-weight:700;color:var(--muted)">{{h.left}}</span>
+                <button type="button" class="btn sm" onClick="{{h.rate}}">Rate this order</button>
+              </div>
+            </sc-if>
+            <sc-if value="{{h.sent}}" hint-placeholder-val="{{ false }}">
+              <span class="bd bdbest" style="align-self:flex-start;margin-top:6px">Feedback sent</span>
+            </sc-if>
+            <sc-if value="{{h.ended}}" hint-placeholder-val="{{ false }}">
+              <span style="font-size:13px;font-weight:600;color:var(--muted);margin-top:6px">The 7-day window to rate this order has ended.</span>
+            </sc-if>
+          </div>
+        </sc-for>
+      </div>
+    </sc-if>
+ 
+    <div style="display:flex;flex-direction:column;border-top:1.5px solid var(--line);margin-top:6px">
+      <sc-for list="{{settings}}" as="r" hint-placeholder-count="4">
+        <div style="display:flex;align-items:center;justify-content:space-between;min-height:56px;border-bottom:1.5px solid var(--line);font-weight:700">
+          <span>{{r.label}}</span>
+          <span style="font-size:13.5px;color:var(--muted);font-weight:600">{{r.value}}</span>
+        </div>
+      </sc-for>
+    </div>
+    <button type="button" class="btn ghost" onClick="{{logout}}">Log out</button>
+  </div>
+  </sc-if>
+</div>
+ 
+<!-- CART BAR -->
+<sc-if value="{{showCartBar}}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;left:16px;right:16px;bottom:84px;z-index:10">
+  <button type="button" onClick="{{openCheckout}}" style="width:100%;min-height:56px;border-radius:999px;background:var(--pink);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 22px;box-shadow:0 10px 24px rgba(26,118,110,.35);font-weight:800;font-size:16px">
+    <span>View cart · {{cartCount}} items</span><span>{{subtotalLabel}}</span>
+  </button>
+</div>
+</sc-if>
+ 
+<!-- BOTTOM NAV -->
+<sc-if value="{{showNav}}" hint-placeholder-val="{{ true }}">
+<nav aria-label="Main" style="display:flex;border-top:1.5px solid var(--line);background:#fff;padding:6px 8px 8px;flex:none">
+  <button type="button" class="navbtn {{nav.home}}" onClick="{{goHome}}">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7v9H4z"/><path d="M10 20v-5h4v5"/></svg>Home
+  </button>
+  <button type="button" class="navbtn {{nav.menu}}" onClick="{{goMenu}}">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="5"/><path d="M7.5 12 12 22l4.5-10"/></svg>Menu
+  </button>
+  <button type="button" class="navbtn {{nav.stores}}" onClick="{{goStores}}">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s7-6 7-11a7 7 0 1 0-14 0c0 5 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>Stores
+  </button>
+  <button type="button" class="navbtn {{nav.account}}" onClick="{{goAccount}}">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>Account
+  </button>
+</nav>
+</sc-if>
+ 
+<!-- ============ PRODUCT SHEET ============ -->
+<sc-if value="{{showSheet}}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:20">
+  <button type="button" aria-label="Close" onClick="{{closeSheet}}" style="position:absolute;inset:0;width:100%;height:100%;background:rgba(10,50,46,.4)"></button>
+  <div style="position:absolute;left:0;right:0;bottom:0;max-height:90%;background:#fff;border-radius:28px 28px 0 0;display:flex;flex-direction:column">
+    <div class="noscroll" style="overflow-y:auto;padding:20px 20px 12px;display:flex;flex-direction:column;gap:18px">
+      <div style="display:flex;gap:14px;align-items:center">
+        <span class="tile {{sheet.t}}" style="width:92px;height:92px;flex:none">
+          <svg viewBox="0 0 80 80" width="72" height="72" aria-hidden="true">
+            <circle cx="{{sheet.a.s1x}}" cy="{{sheet.a.s1y}}" r="{{sheet.a.s1r}}" fill="{{sheet.a.s1c}}"/>
+            <circle cx="{{sheet.a.s2x}}" cy="{{sheet.a.s2y}}" r="{{sheet.a.s2r}}" fill="{{sheet.a.s2c}}"/>
+            <path d="{{sheet.a.base}}" fill="{{sheet.a.baseFill}}" stroke="#1A766E" stroke-width="2"/>
+            <path d="{{sheet.a.top}}" fill="{{sheet.a.topFill}}" stroke="#1A766E" stroke-width="2"/>
+          </svg>
+        </span>
+        <div style="flex:1;min-width:0">
+          <h2 style="font-size:22px;line-height:1.1">{{sheet.name}}</h2>
+          <div style="font-weight:600;font-size:14px;color:var(--muted);margin-top:4px">{{sheet.desc}}</div>
+        </div>
+        <button type="button" aria-label="Close" onClick="{{closeSheet}}" style="width:44px;height:44px;align-self:flex-start;display:flex;align-items:center;justify-content:center;margin:-8px -8px 0 0">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F4A45" stroke-width="2.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+ 
+      <sc-if value="{{sheet.hasSizes}}" hint-placeholder-val="{{ true }}">
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px"><h3 style="font-size:17px">{{sheet.sizeTitle}}</h3><span style="font-size:12px;font-weight:800;color:var(--muted)">REQUIRED</span></div>
+        <div style="display:flex;gap:8px">
+          <sc-for list="{{sizeOpts}}" as="o" hint-placeholder-count="3">
+            <button type="button" class="opt {{o.cls}}" onClick="{{o.pick}}"><span>{{o.label}}</span><small>{{o.sub}}</small><small>{{o.price}}</small></button>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+ 
+      <sc-if value="{{sheet.hasToppings}}" hint-placeholder-val="{{ true }}">
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px"><h3 style="font-size:17px">Drizzles</h3><span style="font-size:12px;font-weight:800;color:var(--muted)">+5,000đ EACH</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <sc-for list="{{drizzles}}" as="t" hint-placeholder-count="3">
+            <button type="button" class="row-opt {{t.cls}}" onClick="{{t.pick}}">
+              <span class="check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span>
+              <span style="flex:1">{{t.label}}</span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px"><h3 style="font-size:17px">Crunchy toppings</h3><span style="font-size:12px;font-weight:800;color:var(--muted)">+7,000đ EACH</span></div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <sc-for list="{{crunchy}}" as="t" hint-placeholder-count="4">
+            <button type="button" class="row-opt {{t.cls}}" onClick="{{t.pick}}">
+              <span class="check"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span>
+              <span style="flex:1">{{t.label}}</span>
+            </button>
+          </sc-for>
+        </div>
+      </div>
+      </sc-if>
+ 
+      <div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px"><label for="note" style="font-weight:800;font-size:17px;font-family:Fredoka">Special notes</label><span style="font-size:12px;font-weight:800;color:var(--muted)">{{noteCount}}/100</span></div>
+        <input id="note" class="field" maxlength="100" placeholder="e.g. Include 2 plastic spoons" value="{{note}}" onChange="{{setNote}}">
+      </div>
+    </div>
+ 
+    <div style="padding:12px 20px 20px;border-top:1.5px solid var(--line);display:flex;gap:12px;align-items:center">
+      <div style="display:flex;align-items:center;gap:10px">
+        <button type="button" class="step" aria-label="Fewer" onClick="{{qtyDown}}">−</button>
+        <span style="font-weight:800;min-width:18px;text-align:center">{{qty}}</span>
+        <button type="button" class="step" aria-label="More" onClick="{{qtyUp}}">+</button>
+      </div>
+      <button type="button" class="btn" onClick="{{addToCart}}" style="flex:1"><span>Add to cart</span><span>{{sheetTotal}}</span></button>
+    </div>
+  </div>
+</div>
+</sc-if>
+ 
+<!-- ============ CHECKOUT ============ -->
+<sc-if value="{{showCheckout}}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:25;background:#F6FBF9;display:flex;flex-direction:column">
+  <div style="display:flex;align-items:center;gap:6px;padding:14px 12px 8px;flex:none">
+    <button type="button" aria-label="Back" onClick="{{closeCheckout}}" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F4A45" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <h1 style="font-size:24px">Your order</h1>
+  </div>
+ 
+  <div class="noscroll" style="flex:1;min-height:0;overflow-y:auto;padding:4px 20px 20px;display:flex;flex-direction:column;gap:20px">
+ 
+    <sc-if value="{{cartEmpty}}" hint-placeholder-val="{{ false }}">
+      <div class="card" style="padding:24px;display:flex;flex-direction:column;gap:10px;align-items:flex-start">
+        <div style="font-weight:800;font-size:18px">Your cart is empty</div>
+        <div style="font-weight:600;color:var(--muted)">Pick a scoop or two to get started.</div>
+        <button type="button" class="btn sm" onClick="{{closeCheckout}}">Back to menu</button>
+      </div>
+    </sc-if>
+ 
+    <sc-if value="{{cartFilled}}" hint-placeholder-val="{{ true }}">
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <sc-for list="{{lines}}" as="l" hint-placeholder-count="2">
+        <div class="card" style="padding:10px;display:flex;gap:12px;align-items:center">
+          <span class="tile {{l.t}}" style="width:64px;height:64px;flex:none;border-radius:16px">
+            <svg viewBox="0 0 80 80" width="48" height="48" aria-hidden="true">
+              <circle cx="{{l.a.s1x}}" cy="{{l.a.s1y}}" r="{{l.a.s1r}}" fill="{{l.a.s1c}}"/>
+              <circle cx="{{l.a.s2x}}" cy="{{l.a.s2y}}" r="{{l.a.s2r}}" fill="{{l.a.s2c}}"/>
+              <path d="{{l.a.base}}" fill="{{l.a.baseFill}}" stroke="#1A766E" stroke-width="2"/>
+              <path d="{{l.a.top}}" fill="{{l.a.topFill}}" stroke="#1A766E" stroke-width="2"/>
+            </svg>
+          </span>
+          <div style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+            <div style="font-weight:800;font-size:14.5px;line-height:1.2">{{l.name}}</div>
+            <div style="font-weight:600;font-size:12.5px;color:var(--muted);line-height:1.3">{{l.detail}}</div>
+            <div style="font-weight:800;font-size:14px">{{l.totalLabel}}</div>
+          </div>
+          <div style="display:flex;align-items:center;gap:6px">
+            <button type="button" class="step" aria-label="Fewer" onClick="{{l.dec}}">−</button>
+            <span style="font-weight:800;min-width:16px;text-align:center">{{l.qty}}</span>
+            <button type="button" class="step" aria-label="More" onClick="{{l.inc}}">+</button>
+          </div>
+        </div>
+      </sc-for>
+    </div>
+ 
+    <div>
+      <h3 style="font-size:18px;margin-bottom:10px">How do you want it?</h3>
+      <div style="display:flex;padding:4px;border-radius:999px;background:var(--rose);gap:4px">
+        <button type="button" class="chip seg {{deliveryCls}}" style="flex:1;justify-content:center" onClick="{{setDelivery}}">Delivery</button>
+        <button type="button" class="chip seg {{pickupCls}}" style="flex:1;justify-content:center" onClick="{{setPickup}}">Pick-up</button>
+      </div>
+    </div>
+ 
+    <sc-if value="{{isDelivery}}" hint-placeholder-val="{{ true }}">
+    <div>
+      <h3 style="font-size:18px;margin-bottom:10px">Deliver to</h3>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <sc-for list="{{addrs}}" as="a" hint-placeholder-count="3">
+          <button type="button" class="row-opt {{a.cls}}" onClick="{{a.pick}}">
+            <span class="radio"></span>
+            <span style="flex:1;min-width:0;display:flex;flex-direction:column"><span>{{a.name}}</span><small style="font-weight:600;color:var(--muted);font-size:12.5px">{{a.line}}</small></span>
+            <span style="font-size:13px;color:var(--muted);font-weight:800">{{a.km}} km</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+    </sc-if>
+ 
+    <sc-if value="{{isPickup}}" hint-placeholder-val="{{ false }}">
+    <div>
+      <h3 style="font-size:18px;margin-bottom:10px">Pick up at</h3>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <sc-for list="{{branchOpts}}" as="b" hint-placeholder-count="3">
+          <button type="button" class="row-opt {{b.cls}}" onClick="{{b.pick}}">
+            <span class="radio"></span>
+            <span style="flex:1;min-width:0;display:flex;flex-direction:column"><span>{{b.name}}</span><small style="font-weight:600;color:var(--muted);font-size:12.5px">{{b.addr}}</small></span>
+            <span style="font-size:13px;color:var(--muted);font-weight:800">{{b.km}} km</span>
+          </button>
+        </sc-for>
+      </div>
+      <h3 style="font-size:18px;margin:16px 0 10px">Pick-up time</h3>
+      <div class="noscroll" style="display:flex;gap:8px;overflow-x:auto;margin:0 -20px;padding:0 20px 2px">
+        <sc-for list="{{slots}}" as="s" hint-placeholder-count="6">
+          <button type="button" class="chip {{s.cls}}" onClick="{{s.pick}}">{{s.label}}</button>
+        </sc-for>
+      </div>
+      <div style="margin-top:8px;font-size:13px;font-weight:600;color:var(--muted)">Slots are 15 minutes long.</div>
+    </div>
+    </sc-if>
+ 
+    <div>
+      <h3 style="font-size:18px;margin-bottom:10px">Pay with</h3>
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <sc-for list="{{payOpts}}" as="p" hint-placeholder-count="4">
+          <button type="button" class="row-opt {{p.cls}}" onClick="{{p.pick}}">
+            <span class="radio"></span>
+            <span style="flex:1;min-width:0;display:flex;flex-direction:column"><span>{{p.label}}</span><small style="font-weight:600;color:var(--muted);font-size:12.5px">{{p.sub}}</small></span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+ 
+    <div class="card" style="padding:16px;display:flex;flex-direction:column;gap:8px;background:var(--blush)">
+      <div style="display:flex;justify-content:space-between;font-weight:700"><span>Items</span><span>{{subtotalLabel}}</span></div>
+      <sc-if value="{{hasPack}}" hint-placeholder-val="{{ true }}">
+        <div style="display:flex;justify-content:space-between;font-weight:700"><span>Insulated packaging</span><span>{{packLabel}}</span></div>
+        <div style="font-size:12.5px;font-weight:600;color:var(--muted);margin-top:-4px">{{packWhy}}</div>
+      </sc-if>
+      <div style="display:flex;justify-content:space-between;font-weight:700"><span>{{feeTitle}}</span><span>{{feeLabel}}</span></div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;border-top:1.5px dashed var(--line);padding-top:10px;margin-top:2px">
+        <span class="disp" style="font-size:19px">Total</span><span class="disp" style="font-size:24px;color:var(--pink)">{{totalLabel}}</span>
+      </div>
+      <div style="font-size:12.5px;font-weight:600;color:var(--muted)">{{sumLine}}</div>
+    </div>
+ 
+    <sc-if value="{{hasBlock}}" hint-placeholder-val="{{ false }}">
+      <div role="alert" style="padding:12px 14px;border-radius:14px;background:var(--butter);color:var(--butterink);font-weight:700;font-size:14px;line-height:1.4">{{blockMsg}}</div>
+    </sc-if>
+    </sc-if>
+  </div>
+ 
+  <sc-if value="{{cartFilled}}" hint-placeholder-val="{{ true }}">
+  <div style="padding:12px 20px 20px;border-top:1.5px solid var(--line);flex:none">
+    <button type="button" class="btn" disabled="{{placeBlocked}}" onClick="{{placeOrder}}"><span>{{placeLabel}}</span></button>
+  </div>
+  </sc-if>
+</div>
+</sc-if>
+ 
+<!-- ============ TRACKING ============ -->
+<sc-if value="{{showTracking}}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:26;background:#F6FBF9;display:flex;flex-direction:column">
+  <div style="display:flex;align-items:center;gap:6px;padding:14px 12px 8px;flex:none">
+    <button type="button" aria-label="Back to menu" onClick="{{leaveTracking}}" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F4A45" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <h1 style="font-size:24px">Order {{placed.id}}</h1>
+  </div>
+  <div class="noscroll" style="flex:1;min-height:0;overflow-y:auto;padding:8px 20px 20px;display:flex;flex-direction:column;gap:20px">
+ 
+    <sc-if value="{{awaitingPay}}" hint-placeholder-val="{{ false }}">
+      <div class="card" style="padding:20px;display:flex;flex-direction:column;align-items:center;gap:12px;background:var(--blush);text-align:center">
+        <div style="font-weight:800;font-size:16px">{{payTitle}}</div>
+        <div style="width:150px;height:150px;border-radius:20px;background:#fff;border:1.5px solid var(--line);display:flex;align-items:center;justify-content:center">
+          <svg viewBox="0 0 10 10" width="110" height="110" aria-label="Payment QR placeholder" role="img">
+            <path fill="#0F4A45" d="M0 0h3v3H0zM7 0h3v3H7zM0 7h3v3H0zM4 0h1v1H4zM5 2h1v2H5zM4 4h2v1H4zM7 4h1v2H7zM9 5h1v2H9zM4 6h1v1H4zM5 8h2v1H5zM8 8h2v1H8zM6 6h1v1H6z"/>
+            <path fill="#fff" d="M1 1h1v1H1zM8 1h1v1H8zM1 8h1v1H1z"/>
+          </svg>
+        </div>
+        <div style="font-weight:800;font-size:28px;font-family:Fredoka;color:var(--pink)">{{countdownLabel}}</div>
+        <div style="font-weight:600;color:var(--muted);font-size:14px;line-height:1.4">Pay {{placed.totalLabel}} within 10 minutes or this order is cancelled automatically.</div>
+        <button type="button" class="btn sm" onClick="{{advance}}">Demo: payment received</button>
+      </div>
+    </sc-if>
+ 
+    <sc-if value="{{cancelled}}" hint-placeholder-val="{{ false }}">
+      <div class="card" style="padding:20px;display:flex;flex-direction:column;gap:10px;background:var(--butter);color:var(--butterink);border-color:transparent">
+        <div style="font-weight:800;font-size:17px">Order cancelled</div>
+        <div style="font-weight:600;line-height:1.4">We didn't get your payment in 10 minutes, so we cancelled this order. Your cart is ready to try again.</div>
+        <button type="button" class="btn sm" onClick="{{leaveTracking}}">Back to menu</button>
+      </div>
+    </sc-if>
+ 
+    <sc-if value="{{trackable}}" hint-placeholder-val="{{ true }}">
+      <div>
+        <div style="font-weight:700;color:var(--muted);font-size:14px">{{etaLine}}</div>
+        <div style="display:flex;flex-direction:column;margin-top:14px">
+          <sc-for list="{{timeline}}" as="s" hint-placeholder-count="4">
+            <div class="{{s.cls}}" style="display:flex;gap:14px;min-height:62px">
+              <div style="display:flex;flex-direction:column;align-items:center">
+                <span class="stp"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12l5 5 9-10"/></svg></span>
+                <span style="flex:1;width:2px;background:var(--line);margin:4px 0"></span>
+              </div>
+              <div style="padding-bottom:14px">
+                <div style="font-weight:800;font-size:16px">{{s.label}}</div>
+                <div style="font-weight:600;font-size:13.5px;color:var(--muted)">{{s.sub}}</div>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+      </div>
+      <button type="button" class="btn soft" onClick="{{advance}}">{{advanceLabel}}</button>
+      <div style="margin-top:-12px;text-align:center;font-size:12.5px;font-weight:600;color:var(--muted)">Demo control. In the real app, shop staff update the status and you get a notification.</div>
+    </sc-if>
+ 
+    <sc-if value="{{showRateCard}}" hint-placeholder-val="{{ false }}">
+      <div class="card" style="padding:18px;display:flex;flex-direction:column;gap:8px;background:var(--blush)">
+        <div class="disp" style="font-size:18px">How was your order?</div>
+        <div style="font-weight:600;color:var(--muted);font-size:14px;line-height:1.4">Tell us about order {{placed.id}}. It takes a minute.</div>
+        <button type="button" class="btn sm" style="align-self:flex-start;margin-top:4px" onClick="{{rateFromTracking}}">Rate this order</button>
+      </div>
+    </sc-if>
+    <sc-if value="{{showSentCard}}" hint-placeholder-val="{{ false }}">
+      <div class="card" style="padding:16px;display:flex;align-items:center;gap:10px;background:var(--blush)">
+        <span class="bd bdbest">Feedback sent</span>
+        <span style="font-weight:600;color:var(--muted);font-size:14px">Thanks for rating this order.</span>
+      </div>
+    </sc-if>
+ 
+    <div class="card" style="padding:16px;display:flex;flex-direction:column;gap:6px">
+      <div style="display:flex;justify-content:space-between;font-weight:700"><span>{{placed.typeLabel}}</span><span>{{placed.totalLabel}}</span></div>
+      <div style="font-weight:600;font-size:13.5px;color:var(--muted)">{{placed.count}} items · {{placed.payLabel}}</div>
+      <div style="font-weight:600;font-size:13.5px;color:var(--muted)">{{placed.where}}</div>
+    </div>
+  </div>
+</div>
+</sc-if>
+ 
+<!-- ============ FEEDBACK ============ -->
+<sc-if value="{{showFeedback}}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:28;background:#F6FBF9;display:flex;flex-direction:column">
+  <div style="display:flex;align-items:center;gap:6px;padding:14px 12px 8px;flex:none">
+    <button type="button" aria-label="Back" onClick="{{closeFeedback}}" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F4A45" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <h1 style="font-size:24px">Rate your order</h1>
+  </div>
+ 
+  <div class="noscroll" style="flex:1;min-height:0;overflow-y:auto;padding:4px 20px 20px;display:flex;flex-direction:column;gap:22px">
+    <div class="card" style="padding:14px;display:flex;justify-content:space-between;font-weight:800;background:var(--blush)"><span>Order {{fb.id}}</span><span>{{fb.typeLabel}}</span></div>
+ 
+    <div>
+      <div class="disp" style="font-size:18px">How was it?</div>
+      <div style="display:flex;gap:4px;margin:8px -6px 0">
+        <sc-for list="{{stars}}" as="st" hint-placeholder-count="5">
+          <button type="button" class="star {{st.cls}}" aria-label="{{st.aria}}" onClick="{{st.pick}}"><svg width="38" height="38" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg></button>
+        </sc-for>
+      </div>
+      <div role="status" style="font-weight:800;color:var(--pink);margin-top:4px;min-height:22px">{{ratingLabel}}</div>
+    </div>
+ 
+    <sc-if value="{{hasOptions}}" hint-placeholder-val="{{ false }}">
+      <div>
+        <div class="disp" style="font-size:18px">What stood out? <span style="font-family:Nunito;font-size:13px;font-weight:700;color:var(--muted)">Optional</span></div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:10px">
+          <sc-for list="{{fbOpts}}" as="o" hint-placeholder-count="6">
+            <button type="button" class="chip {{o.cls}}" onClick="{{o.pick}}">{{o.label}}</button>
+          </sc-for>
+        </div>
+      </div>
+    </sc-if>
+ 
+    <div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px"><label for="fbc" style="font-weight:800;font-size:17px;font-family:Fredoka">Comment <span style="font-family:Nunito;font-size:13px;font-weight:700;color:var(--muted)">Optional</span></label><span style="font-size:12px;font-weight:800;color:var(--muted)">{{commentCount}}/500</span></div>
+      <textarea id="fbc" class="field" maxlength="500" placeholder="Tell us more about your order" value="{{comment}}" onChange="{{setComment}}"></textarea>
+    </div>
+ 
+    <div>
+      <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px"><span style="font-weight:800;font-size:17px;font-family:Fredoka">Photos <span style="font-family:Nunito;font-size:13px;font-weight:700;color:var(--muted)">Optional</span></span><span style="font-size:12px;font-weight:800;color:var(--muted)">{{photoCount}}/3</span></div>
+      <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:12px">
+        <sc-for list="{{photos}}" as="ph" hint-placeholder-count="2">
+          <div class="ph {{ph.cls}}">{{ph.label}}<button type="button" class="phx" aria-label="{{ph.aria}}" onClick="{{ph.remove}}"><span>×</span></button></div>
+        </sc-for>
+      </div>
+      <sc-if value="{{hasPhotoErr}}" hint-placeholder-val="{{ false }}">
+        <div class="msg" role="alert" style="margin-bottom:12px">{{photoErr}}</div>
+      </sc-if>
+      <div style="display:flex;align-items:center;gap:14px;flex-wrap:wrap">
+        <button type="button" class="btn ghost sm" onClick="{{addPhoto}}">Add photo</button>
+        <button type="button" class="link" style="font-size:13px;min-height:44px" onClick="{{addBigPhoto}}">Demo: try a 6 MB file</button>
+      </div>
+      <div style="font-weight:600;font-size:13px;color:var(--muted);margin-top:6px">JPG, PNG or WebP, up to 5 MB each.</div>
+    </div>
+ 
+    <div style="font-weight:600;font-size:13px;color:var(--muted);line-height:1.4">Only Happy Creamy management can see your feedback. You can't edit it after sending.</div>
+  </div>
+ 
+  <div style="padding:12px 20px 20px;border-top:1.5px solid var(--line);display:flex;flex-direction:column;gap:8px">
+    <sc-if value="{{noRating}}" hint-placeholder-val="{{ false }}">
+      <div style="text-align:center;font-weight:700;font-size:13.5px;color:var(--muted)">Choose a star rating to continue.</div>
+    </sc-if>
+    <button type="button" class="btn" disabled="{{noRating}}" onClick="{{sendFeedback}}">Send feedback</button>
+  </div>
+</div>
+</sc-if>
+ 
+<!-- PUSH NOTIFICATION (demo) -->
+<sc-if value="{{showPush}}" hint-placeholder-val="{{ false }}">
+<button type="button" onClick="{{openPush}}" style="position:absolute;left:12px;right:12px;top:10px;z-index:45;background:#fff;border-radius:20px;border:1.5px solid var(--line);box-shadow:0 10px 28px rgba(15,74,69,.22);padding:12px 14px;display:flex;gap:12px;align-items:center">
+  <span class="tile t0" style="width:40px;height:40px;border-radius:12px;flex:none;font-family:Fredoka;font-weight:600;color:var(--pink)">HC</span>
+  <span style="min-width:0;display:flex;flex-direction:column">
+    <span style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--muted)"><span>Happy Creamy</span><span>now</span></span>
+    <span style="font-weight:800;font-size:15px">How was your order?</span>
+    <span style="font-weight:600;font-size:13.5px;color:var(--muted)">Tell us about order {{placed.id}}. It takes a minute.</span>
+  </span>
+</button>
+</sc-if>
+ 
+<!-- TOAST -->
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{ false }}">
+<div role="status" style="position:absolute;left:50%;transform:translateX(-50%);top:18px;z-index:40;background:var(--ink);color:#fff;font-weight:800;font-size:14px;padding:10px 18px;border-radius:999px;white-space:nowrap">{{toast}}</div>
+</sc-if>
+ 
+</div>
+</script>
+<script>
+(function () {
+  var handlers = [];
+  var VOID = { input:1, br:1, img:1, hr:1, meta:1, link:1, source:1, wbr:1 };
+  var esc = function (s) { return String(s).replace(/[&<>"]/g, function (c) { return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]; }); };
+  var HOLE = /\{\{\s*([\w.]+)\s*\}\}/g, WHOLE = /^\s*\{\{\s*([\w.]+)\s*\}\}\s*$/;
+  function get(path, scope) {
+    var cur = scope, parts = path.split('.');
+    for (var i = 0; i < parts.length; i++) { if (cur == null) return undefined; cur = cur[parts[i]]; }
+    return cur;
+  }
+  // Turn the template DOM into a function (scope) => html string.
+  function compile(node) {
+    if (node.nodeType === 3) {
+      var text = node.nodeValue;
+      return function (scope) { return text.replace(HOLE, function (_, p) { var v = get(p, scope); return v == null || typeof v === 'boolean' ? '' : esc(v); }); };
+    }
+    if (node.nodeType !== 1) return function () { return ''; };
+    var tag = node.localName;
+    var kids = Array.prototype.map.call(node.childNodes, compile);
+    var inner = function (scope) { return kids.map(function (k) { return k(scope); }).join(''); };
+    if (tag === 'sc-if') {
+      var cond = node.getAttribute('value').match(WHOLE)[1];
+      return function (scope) { return get(cond, scope) ? inner(scope) : ''; };
+    }
+    if (tag === 'sc-for') {
+      var listPath = node.getAttribute('list').match(WHOLE)[1], as = node.getAttribute('as');
+      return function (scope) {
+        var list = get(listPath, scope) || [], out = '';
+        for (var i = 0; i < list.length; i++) { var child = Object.create(scope); child[as] = list[i]; child.index = i; out += inner(child); }
+        return out;
+      };
+    }
+    var attrs = Array.prototype.map.call(node.attributes, function (a) {
+      var name = a.name, lname = name.toLowerCase(), val = a.value;
+      if (lname.indexOf('hint-') === 0) return null;
+      var whole = val.match(WHOLE);
+      if (lname === 'onclick' || lname === 'onchange') {
+        var p = whole[1], kind = lname === 'onclick' ? 'data-hc' : 'data-hi';
+        return function (scope) { var fn = get(p, scope); if (typeof fn !== 'function') return ''; handlers.push(fn); return ' ' + kind + '="' + (handlers.length - 1) + '"'; };
+      }
+      if (whole) {
+        var path = whole[1];
+        return function (scope) {
+          var v = get(path, scope);
+          if (v === false || v == null) return '';
+          var extra = tag === 'textarea' && lname === 'value' ? ' data-val="' + esc(v) + '"' : '';
+          if (extra) return extra;
+          return ' ' + name + '="' + (v === true ? '' : esc(v)) + '"';
+        };
+      }
+      if (val.indexOf('{{') === -1) return function () { return ' ' + name + '="' + esc(val) + '"'; };
+      return function (scope) { return ' ' + name + '="' + esc(val.replace(HOLE, function (_, p) { var v = get(p, scope); return v == null ? '' : v; })) + '"'; };
+    }).filter(Boolean);
+    return function (scope) {
+      var a = attrs.map(function (f) { return f(scope); }).join('');
+      return VOID[tag] ? '<' + tag + a + '>' : '<' + tag + a + '>' + inner(scope) + '</' + tag + '>';
+    };
+  }
+ 
+  window.DCLogic = function () {
+    var self = this;
+    this.setState = function (patch) {
+      self.state = Object.assign({}, self.state, typeof patch === 'function' ? patch(self.state) : patch);
+      if (!self._queued) { self._queued = true; Promise.resolve().then(function () { self._queued = false; self._render(); }); }
+    };
+  };
+ 
+  window.mountDC = function (Component, templateHtml, root) {
+    var tpl = document.createElement('template');
+    tpl.innerHTML = templateHtml;
+    var renderFn = (function () { var fns = Array.prototype.map.call(tpl.content.childNodes, compile); return function (s) { return fns.map(function (f) { return f(s); }).join(''); }; })();
+    var inst = new Component();
+    // Keep inner scroll positions and the focused field across re-renders.
+    function pathOf(el) { var p = []; while (el && el !== root) { p.unshift(Array.prototype.indexOf.call(el.parentNode.children, el)); el = el.parentNode; } return p.join('/'); }
+    function byPath(path) { var el = root; if (path === '') return el; var parts = path.split('/'); for (var i = 0; i < parts.length; i++) { el = el && el.children[Number(parts[i])]; } return el; }
+    inst._render = function () {
+      var saved = [], all = root.querySelectorAll('*');
+      for (var i = 0; i < all.length; i++) if (all[i].scrollTop || all[i].scrollLeft) saved.push([pathOf(all[i]), all[i].scrollTop, all[i].scrollLeft]);
+      var fields = Array.prototype.slice.call(root.querySelectorAll('input,textarea')), active = document.activeElement;
+      var fIndex = fields.indexOf(active), sel = fIndex >= 0 && active.selectionStart != null ? [active.selectionStart, active.selectionEnd] : null;
+      handlers = [];
+      root.innerHTML = renderFn(inst.renderVals());
+      Array.prototype.forEach.call(root.querySelectorAll('textarea[data-val]'), function (t) { t.value = t.getAttribute('data-val'); });
+      saved.forEach(function (s) { var el = byPath(s[0]); if (el) { el.scrollTop = s[1]; el.scrollLeft = s[2]; } });
+      if (fIndex >= 0) { var f = root.querySelectorAll('input,textarea')[fIndex]; if (f) { f.focus(); if (sel) try { f.setSelectionRange(sel[0], sel[1]); } catch (e) {} } }
+    };
+    root.addEventListener('click', function (e) { var el = e.target.closest('[data-hc]'); if (el && root.contains(el)) handlers[Number(el.getAttribute('data-hc'))](e); });
+    root.addEventListener('input', function (e) { var el = e.target.closest('[data-hi]'); if (el) handlers[Number(el.getAttribute('data-hi'))](e); });
+    inst._render();
+    if (inst.componentDidMount) inst.componentDidMount();
+  };
+})();
+</script>
+<script>
+var Component = (function () {
+ 
+const fmt = (n) => n.toLocaleString('en-US') + 'đ';
+ 
+const PRODUCTS = [
+  { id: 'p1', name: 'Mint Cloud Cup', kind: 'cup', base: 25000, badge: 'New', c1: '#7FD1C0', c2: '#A5D8EC', t: 0, desc: 'Fluffy mint cream in an insulated cup.' },
+  { id: 'p2', name: 'Matcha Mochi Cone', kind: 'cone', base: 28000, badge: 'Hot', c1: '#A9D18E', c2: '#A9D18E', t: 1, desc: 'Grassy matcha with chewy mochi bits, in a crispy cone.' },
+  { id: 'p3', name: 'Choco Hazelnut Cup', kind: 'cup', base: 27000, badge: 'Best-Seller', c1: '#8B5E4B', c2: '#C79A7E', t: 2, desc: 'Dark chocolate swirled with roasted hazelnut.' },
+  { id: 'p4', name: 'Mango Sunrise Cone', kind: 'cone', base: 25000, badge: '', c1: '#FFC857', c2: '#FFC857', t: 2, desc: 'Sun-ripe mango sorbet in a waffle cone.' },
+  { id: 'p5', name: 'Coconut Pandan Cup', kind: 'cup', base: 28000, badge: 'New', c1: '#8ED1B0', c2: '#F6F0DC', t: 1, desc: 'Creamy coconut with a pandan ribbon.' },
+  { id: 'p6', name: 'Vanilla Bean Cone', kind: 'cone', base: 22000, badge: 'Best-Seller', c1: '#FFF1C9', c2: '#FFF1C9', t: 3, desc: 'Classic vanilla, flecked with real beans.' },
+  { id: 'p7', name: 'Mint Cloud Tub', kind: 'tub', base: 79000, tub: [79000, 169000], badge: '', c1: '#7FD1C0', c2: '#7FD1C0', t: 0, desc: 'Packed with dry ice so it arrives frozen.' },
+  { id: 'p8', name: 'Choco Hazelnut Tub', kind: 'tub', base: 85000, tub: [85000, 179000], badge: 'Best-Seller', c1: '#8B5E4B', c2: '#8B5E4B', t: 2, desc: 'Packed with dry ice so it arrives frozen.' },
+  { id: 'p9', name: 'Lagoon Milkshake', kind: 'bev', base: 39000, badge: '', c1: '#A5D8EC', c2: '#fff', t: 3, desc: 'Thick, cold and bright.' },
+  { id: 'p10', name: 'Mango Float', kind: 'bev', base: 42000, badge: 'Hot', c1: '#FFD36B', c2: '#fff', t: 2, desc: 'Mango fizz with a scoop of vanilla on top.' }
+];
+const SIZES = [
+  { id: 'S', label: 'Size S', sub: '1 scoop', add: 0 },
+  { id: 'M', label: 'Size M', sub: '2 scoops', add: 15000 },
+  { id: 'L', label: 'Size L', sub: '3 scoops', add: 25000 }
+];
+const DRIZZLE = [{ id: 'd1', label: 'Chocolate Sauce' }, { id: 'd2', label: 'Strawberry Sauce' }, { id: 'd3', label: 'Caramel Sauce' }];
+const CRUNCH = [{ id: 'c1', label: 'Roasted Almonds' }, { id: 'c2', label: 'Crushed Waffles' }, { id: 'c3', label: 'Sprinkles' }, { id: 'c4', label: 'Marshmallows' }];
+const BRANCHES = [
+  { id: 'b1', name: 'Happy Creamy Nguyen Hue', addr: '12 Nguyen Hue, District 1', km: 1.2, status: 'Open now', st: 'bdbest', x: 150, y: 70 },
+  { id: 'b2', name: 'Happy Creamy Thao Dien', addr: '48 Xuan Thuy, Thu Duc', km: 4.8, status: 'Closing soon', st: 'bdnew', x: 270, y: 140 },
+  { id: 'b3', name: 'Happy Creamy Phu My Hung', addr: '9 Nguyen Luong Bang, District 7', km: 8.9, status: 'Open now', st: 'bdbest', x: 80, y: 165 }
+];
+const ADDRS = [
+  { id: 'a1', name: 'Home', line: '25 Le Loi, District 1', km: 1.4 },
+  { id: 'a2', name: 'Office', line: 'Bitexco Tower, District 1', km: 4.2 },
+  { id: 'a3', name: 'Parents', line: 'Vung Tau Road, Dong Nai', km: 11.8 }
+];
+const SLOTS = ['10:30', '10:45', '11:00', '11:15', '11:30', '11:45'];
+const PAYS = [
+  { id: 'cod', label: 'Cash on delivery', sub: 'Pay when it arrives or when you pick up' },
+  { id: 'momo', label: 'MoMo wallet', sub: 'Confirm within 10 minutes' },
+  { id: 'qr', label: 'Bank QR (VietQR)', sub: 'Scan with any banking app, 10 minutes' },
+  { id: 'card', label: 'Visa / Mastercard', sub: 'Secure payment by VNPay, 10 minutes' }
+];
+const HISTORY = [
+  { id: 'HC-2031', type: 'delivery', total: '84,000đ', date: '3 Nov', ago: 2 },
+  { id: 'HC-2012', type: 'pickup', total: '56,000đ', date: '30 Oct', ago: 6 },
+  { id: 'HC-1987', type: 'delivery', total: '169,000đ', date: '9 Oct', ago: 27 }
+];
+const STAR_LABELS = ['Very bad', 'Bad', 'Okay', 'Good', 'Great'];
+const PRAISE = [
+  { id: 'fs', label: 'Friendly Staff' }, { id: 'gp', label: 'Good Product/Service' },
+  { id: 'fd', label: 'Fast Delivery', del: true }, { id: 'cf', label: 'Cold and Fresh' }
+];
+const PROBLEM = [
+  { id: 'us', label: 'Unfriendly Staff' }, { id: 'pq', label: 'Poor Product Quality' },
+  { id: 'sd', label: 'Slow Delivery', del: true }, { id: 'mo', label: 'Melted on Arrival', del: true },
+  { id: 'wi', label: 'Wrong Item' }, { id: 'on', label: 'Order Not Complete' }
+];
+function optionsFor(rating, type) {
+  const list = rating === 0 ? [] : rating <= 2 ? PROBLEM : rating === 3 ? PRAISE.concat(PROBLEM) : PRAISE;
+  return list.filter((o) => !o.del || type === 'delivery');
+}
+const SLIDES = [
+  { tag: 'New', title: 'Coconut Pandan has landed', sub: 'Creamy coconut, a ribbon of pandan.', cls: 'p0' },
+  { tag: 'Take-away', title: 'Tubs packed in dry ice', sub: '400 ml or 1 litre, delivered frozen.', cls: 'p1' },
+  { tag: 'Delivery', title: 'Cold at your door', sub: 'Within 10 km of any Happy Creamy shop.', cls: 'p2' }
+];
+ 
+function artOf(p) {
+  const k = p.kind;
+  const a = { base: '', baseFill: '#fff', top: '', topFill: '#fff', s1x: 0, s1y: 0, s1r: 0, s1c: p.c1, s2x: 0, s2y: 0, s2r: 0, s2c: p.c2 };
+  if (k === 'cone') {
+    a.base = 'M26 42 L54 42 L40 76 Z'; a.baseFill = '#E9B56F';
+    a.s1x = 40; a.s1y = 32; a.s1r = 16;
+  } else if (k === 'cup') {
+    a.base = 'M18 46 H62 L56 74 Q55.5 76 53.5 76 H26.5 Q24.5 76 24 74 Z'; a.baseFill = '#FFFFFF';
+    a.s1x = 31; a.s1y = 38; a.s1r = 13; a.s2x = 49; a.s2y = 38; a.s2r = 13;
+  } else if (k === 'tub') {
+    a.base = 'M18 36 H62 V70 Q62 76 56 76 H24 Q18 76 18 70 Z'; a.baseFill = '#FFFFFF';
+    a.top = 'M14 26 H66 V38 H14 Z'; a.topFill = p.c1;
+  } else {
+    a.base = 'M22 26 H58 L53 72 Q52.5 76 49 76 H31 Q27.5 76 27 72 Z'; a.baseFill = p.c1;
+    a.s1x = 40; a.s1y = 22; a.s1r = 13; a.s1c = '#FFFFFF'; a.s2x = 46; a.s2y = 12; a.s2r = 4; a.s2c = '#1A766E';
+  }
+  return a;
+}
+const BADGE_CLS = { 'New': 'bdnew', 'Hot': 'bdhot', 'Best-Seller': 'bdbest' };
+const KIND_CAT = { cup: 'cups', cone: 'cones', tub: 'tubs', bev: 'bev' };
+ 
+class Component extends DCLogic {
+  state = {
+    signedIn: false, authMode: 'login', authStep: 'form', email: '', otp: '',
+    tab: 'home', cat: 'all', slide: 0,
+    product: null, size: 'S', tops: {}, note: '', qty: 1,
+    cart: [], view: 'app', orderType: 'delivery', addr: 'a2', branch: 'b1', slot: '10:45', pay: 'cod',
+    placed: null, orderStep: 0, countdown: 600, ordersTab: 'active', toast: '', uid: 1,
+    fb: null, sent: {}, push: false
+  };
+ 
+  componentDidMount() {
+    this.timer = setInterval(() => {
+      const s = this.state;
+      if (s.view === 'tracking' && s.orderStep === -1) {
+        if (s.countdown <= 1) this.setState({ countdown: 0, orderStep: -2 });
+        else this.setState({ countdown: s.countdown - 1 });
+      }
+    }, 1000);
+  }
+  componentWillUnmount() { clearInterval(this.timer); clearTimeout(this.toastTimer); clearTimeout(this.pushTimer); }
+ 
+  showToast(msg) {
+    this.setState({ toast: msg });
+    clearTimeout(this.toastTimer);
+    this.toastTimer = setTimeout(() => this.setState({ toast: '' }), 1800);
+  }
+ 
+  openFeedback(id, type, from) {
+    clearTimeout(this.pushTimer);
+    this.setState({ view: 'feedback', push: false, fb: { id, type, from, rating: 0, opts: {}, comment: '', photos: [], pn: 0, err: '' } });
+  }
+  patchFb(o) { this.setState({ fb: { ...this.state.fb, ...o } }); }
+ 
+  priceFor(p, size, tops) {
+    let unit = p.base;
+    if (p.kind === 'cup' || p.kind === 'cone') unit += SIZES.find((x) => x.id === size).add;
+    if (p.kind === 'tub') unit = size === 't1' ? p.tub[1] : p.tub[0];
+    DRIZZLE.forEach((t) => { if (tops[t.id]) unit += 5000; });
+    CRUNCH.forEach((t) => { if (tops[t.id]) unit += 7000; });
+    return unit;
+  }
+ 
+  openProduct(p) {
+    this.setState({ product: p.id, size: p.kind === 'tub' ? 't4' : 'S', tops: {}, note: '', qty: 1 });
+  }
+ 
+  totals() {
+    const s = this.state;
+    const items = s.cart.reduce((n, l) => n + l.unit * l.qty, 0);
+    const hasTub = s.cart.some((l) => l.kind === 'tub');
+    const del = s.orderType === 'delivery';
+    const addr = ADDRS.find((a) => a.id === s.addr);
+    const dist = addr.km;
+    let fee = 0, block = '';
+    if (del) {
+      if (dist > 10) block = 'Sorry, this address is outside our 10km delivery coverage.';
+      else {
+        fee = dist < 2 ? 15000 : dist < 5 ? 25000 : 35000;
+        if (items < 30000) block = 'Delivery orders start at 30,000đ. Add ' + fmt(30000 - items) + ' more to continue.';
+      }
+    }
+    const far = del && dist > 3 && dist <= 10;
+    const pack = hasTub || far ? 10000 : 0;
+    const packWhy = hasTub && far ? 'Dry-ice packaging for tubs and deliveries over 3 km.' : hasTub ? 'Dry-ice packaging for Take-away Tubs.' : 'Dry-ice packaging for deliveries over 3 km.';
+    return { items, fee, pack, packWhy, block, total: items + fee + pack, del, dist };
+  }
+ 
+  renderVals() {
+    const s = this.state;
+    const set = (o) => () => this.setState(o);
+ 
+    /* ---------- auth ---------- */
+    const reg = s.authMode === 'register';
+    const emailShown = s.email || 'nhung@example.com';
+ 
+    /* ---------- nav ---------- */
+    const overlay = s.view !== 'app' || !!s.product;
+    const nav = { home: s.tab === 'home' ? 'on' : '', menu: s.tab === 'menu' ? 'on' : '', stores: s.tab === 'stores' ? 'on' : '', account: s.tab === 'account' ? 'on' : '' };
+ 
+    /* ---------- home ---------- */
+    const bestOf = (p) => ({ ...p, a: artOf(p), t: 't' + p.t, priceLabel: 'from ' + fmt(p.kind === 'tub' ? p.tub[0] : p.base), open: () => this.openProduct(p) });
+    const cardOf = (p) => ({
+      ...bestOf(p), badgeCls: BADGE_CLS[p.badge] || '', aria: 'Customize ' + p.name
+    });
+    const bestsellers = PRODUCTS.filter((p) => p.badge === 'Best-Seller').map(bestOf);
+    const quickDefs = [
+      { label: 'Best-Sellers', cat: 'best', p: PRODUCTS[2], t: 0 },
+      { label: 'Cups', cat: 'cups', p: PRODUCTS[0], t: 3 },
+      { label: 'Cones', cat: 'cones', p: PRODUCTS[1], t: 1 },
+      { label: 'Take-away Tubs', cat: 'tubs', p: PRODUCTS[6], t: 2 }
+    ];
+    const quick = quickDefs.map((q) => ({ label: q.label, t: 't' + q.t, a: artOf(q.p), pick: set({ tab: 'menu', cat: q.cat }) }));
+    const sl = SLIDES[s.slide];
+    const dots = SLIDES.map((d, i) => ({ cls: i === s.slide ? 'on' : '', aria: 'Slide ' + (i + 1), pick: set({ slide: i }) }));
+ 
+    /* ---------- menu ---------- */
+    const catDefs = [['all', 'All'], ['new', 'New Arrivals'], ['best', 'Best-Sellers'], ['cups', 'Cups'], ['cones', 'Cones'], ['tubs', 'Take-away Tubs'], ['bev', 'Beverages']];
+    const cats = catDefs.map(([id, label]) => ({ label, cls: s.cat === id ? 'on' : '', pick: set({ cat: id }) }));
+    const products = PRODUCTS.filter((p) => {
+      if (s.cat === 'all') return true;
+      if (s.cat === 'new') return p.badge === 'New';
+      if (s.cat === 'best') return p.badge === 'Best-Seller';
+      return KIND_CAT[p.kind] === s.cat;
+    }).map(cardOf);
+ 
+    /* ---------- stores ---------- */
+    const branches = BRANCHES.map((b) => ({
+      ...b, stCls: b.st, cls: s.branch === b.id ? 'sel' : '', edge: s.branch === b.id ? 'border-color:#1A766E;box-shadow:inset 0 0 0 1px #1A766E;' : '',
+      pick: set({ branch: b.id })
+    }));
+    const pins = BRANCHES.map((b) => ({ x: b.x, y: b.y, r: s.branch === b.id ? 15 : 11, fill: s.branch === b.id ? '#1A766E' : '#7FD1C0' }));
+ 
+    /* ---------- account ---------- */
+    const placed = s.placed;
+    const done = placed && s.orderStep === 3;
+    const hasActive = !!placed && !done && s.orderStep !== -2;
+    const statusLabel = placed ? this.statusText() : '';
+    const histSrc = (done ? [{ id: placed.id, type: placed.type, total: placed.totalLabel, date: 'Today', ago: 0 }] : []).concat(HISTORY);
+    const history = histSrc.map((h) => {
+      const sent = !!s.sent[h.id], open = h.ago < 7, left = 7 - h.ago;
+      return {
+        title: 'Order ' + h.id, total: h.total, meta: (h.type === 'pickup' ? 'Pick-up' : 'Delivery') + ' · Completed · ' + h.date,
+        canRate: open && !sent, sent, ended: !open && !sent, left: left === 1 ? '1 day left to rate' : left + ' days left to rate',
+        rate: () => this.openFeedback(h.id, h.type, 'app')
+      };
+    });
+ 
+    /* ---------- feedback ---------- */
+    const fb = s.fb || { id: '', type: 'delivery', rating: 0, opts: {}, comment: '', photos: [], err: '' };
+    const stars = [1, 2, 3, 4, 5].map((n) => ({
+      cls: n <= fb.rating ? 'on' : '', aria: n + (n === 1 ? ' star' : ' stars') + ': ' + STAR_LABELS[n - 1],
+      pick: () => {
+        const keep = {};
+        optionsFor(n, fb.type).forEach((o) => { if (fb.opts[o.id]) keep[o.id] = true; });
+        this.patchFb({ rating: n, opts: keep });
+      }
+    }));
+    const fbOpts = optionsFor(fb.rating, fb.type).map((o) => ({
+      label: o.label, cls: fb.opts[o.id] ? 'on' : '', pick: () => this.patchFb({ opts: { ...fb.opts, [o.id]: !fb.opts[o.id] } })
+    }));
+    const photos = fb.photos.map((ph) => ({
+      cls: 'ph' + (ph.n % 3), label: 'Photo ' + ph.n, aria: 'Remove photo ' + ph.n,
+      remove: () => this.patchFb({ photos: fb.photos.filter((x) => x.n !== ph.n), err: '' })
+    }));
+    const settings = [
+      { label: 'Profile', value: 'Nhung Nguyen' },
+      { label: 'Saved addresses', value: '3 saved' },
+      { label: 'Password', value: 'Change' },
+      { label: 'Language', value: 'English' }
+    ];
+ 
+    /* ---------- sheet ---------- */
+    const prod = PRODUCTS.find((p) => p.id === s.product) || PRODUCTS[0];
+    const isTub = prod.kind === 'tub', isBev = prod.kind === 'bev';
+    const sizeOpts = isTub
+      ? [{ id: 't4', label: '400 ml', sub: 'Pint tub', price: fmt(prod.tub[0]) }, { id: 't1', label: '1 litre', sub: 'Family tub', price: fmt(prod.tub[1]) }]
+      : SIZES.map((z) => ({ ...z, price: z.add ? '+' + fmt(z.add) : 'Base price' }));
+    const sizeOptsOut = sizeOpts.map((o) => ({ ...o, cls: s.size === o.id ? 'on' : '', pick: set({ size: o.id }) }));
+    const topOf = (t) => ({ ...t, cls: s.tops[t.id] ? 'on' : '', pick: () => this.setState({ tops: { ...s.tops, [t.id]: !s.tops[t.id] } }) });
+    const unit = this.priceFor(prod, s.size, s.tops);
+    const sheet = {
+      ...prod, a: artOf(prod), t: 't' + prod.t, hasSizes: !isBev, hasToppings: !isTub,
+      sizeTitle: isTub ? 'Tub size' : 'Size'
+    };
+ 
+    /* ---------- cart / checkout ---------- */
+    const tot = this.totals();
+    const cartCount = s.cart.reduce((n, l) => n + l.qty, 0);
+    const lines = s.cart.map((l) => {
+      const p = PRODUCTS.find((x) => x.id === l.pid);
+      return {
+        ...l, a: artOf(p), t: 't' + p.t, totalLabel: fmt(l.unit * l.qty),
+        inc: () => this.setState({ cart: s.cart.map((x) => (x.uid === l.uid ? { ...x, qty: x.qty + 1 } : x)) }),
+        dec: () => this.setState({ cart: s.cart.map((x) => (x.uid === l.uid ? { ...x, qty: x.qty - 1 } : x)).filter((x) => x.qty > 0) })
+      };
+    });
+    const del = s.orderType === 'delivery';
+    const addrs = ADDRS.map((a) => ({ ...a, cls: s.addr === a.id ? 'on' : '', pick: set({ addr: a.id }) }));
+    const branchOpts = BRANCHES.map((b) => ({ ...b, cls: s.branch === b.id ? 'on' : '', pick: set({ branch: b.id }) }));
+    const slots = SLOTS.map((t) => ({ label: t, cls: s.slot === t ? 'on' : '', pick: set({ slot: t }) }));
+    const payOpts = PAYS.map((p) => ({ ...p, cls: s.pay === p.id ? 'on' : '', pick: set({ pay: p.id }) }));
+    const sumLine = fmt(tot.items) + ' + ' + fmt(tot.pack) + ' + ' + fmt(tot.fee) + ' = ' + fmt(tot.total);
+    const blocked = !!tot.block || s.cart.length === 0;
+ 
+    /* ---------- tracking ---------- */
+    const steps = s.orderType === 'delivery' || (placed && placed.type === 'delivery')
+      ? ['Received', 'Preparing', 'Out for delivery', 'Completed']
+      : ['Received', 'Preparing', 'Ready for pick-up', 'Completed'];
+    const stepSub = ['We have your order.', 'Scooping and packing.', placed && placed.type === 'pickup' ? 'Come say hi at the counter.' : 'Your rider is on the way.', 'Enjoy every bite.'];
+    const useSteps = placed && placed.type === 'pickup' ? ['Received', 'Preparing', 'Ready for pick-up', 'Completed'] : ['Received', 'Preparing', 'Out for delivery', 'Completed'];
+    const timeline = useSteps.map((label, i) => ({
+      label, sub: stepSub[i],
+      cls: i < s.orderStep ? 'done' : i === s.orderStep ? (s.orderStep === 3 ? 'done' : 'now') : 'next'
+    }));
+    const mm = String(Math.floor(s.countdown / 60)).padStart(2, '0'), ss = String(s.countdown % 60).padStart(2, '0');
+    const payName = placed ? placed.payLabel : '';
+ 
+    return {
+      showAuth: !s.signedIn, authForm: s.authStep === 'form', authOtp: s.authStep === 'otp',
+      authCta: reg ? 'Create account' : 'Log in',
+      authSwitch: reg ? 'Already have an account? Log in' : 'New here? Create an account',
+      email: s.email, emailShown, otp: s.otp, otpBlocked: s.otp.length < 6,
+      setEmail: (e) => this.setState({ email: e.target.value }),
+      setOtp: (e) => this.setState({ otp: e.target.value.replace(/\D/g, '').slice(0, 6) }),
+      socialSignIn: set({ signedIn: true }),
+      toggleAuth: () => this.setState({ authMode: reg ? 'login' : 'register' }),
+      submitAuth: () => (reg ? this.setState({ authStep: 'otp', otp: '' }) : this.setState({ signedIn: true })),
+      verifyOtp: () => this.setState({ signedIn: true, authStep: 'form', authMode: 'login' }),
+      logout: () => this.setState({ signedIn: false, tab: 'home', cart: [], placed: null, view: 'app', fb: null, push: false }),
+ 
+      nav, showNav: !overlay,
+      goHome: set({ tab: 'home' }), goMenu: set({ tab: 'menu' }), goStores: set({ tab: 'stores' }), goAccount: set({ tab: 'account' }),
+ 
+      isHome: s.tab === 'home', isMenu: s.tab === 'menu', isStores: s.tab === 'stores', isAccount: s.tab === 'account',
+      slide: sl, dots, quick, bestsellers,
+      goOrderNow: set({ tab: 'menu', cat: 'all' }), goBest: set({ tab: 'menu', cat: 'best' }),
+ 
+      cats, products,
+      branches, pins,
+ 
+      emailShown2: emailShown,
+      tabActiveCls: s.ordersTab === 'active' ? 'on' : '', tabHistCls: s.ordersTab === 'history' ? 'on' : '',
+      showActive: set({ ordersTab: 'active' }), showHistory: set({ ordersTab: 'history' }),
+      showActiveList: s.ordersTab === 'active', showHistoryList: s.ordersTab === 'history',
+      hasActive, noActive: !hasActive, placed: placed || { id: '', totalLabel: '', typeLabel: '', count: 0, payLabel: '', where: '' },
+      statusLabel, history, settings,
+      openTracking: set({ view: 'tracking' }),
+ 
+      showCartBar: s.tab === 'menu' && s.cart.length > 0 && !overlay,
+      cartCount, subtotalLabel: fmt(tot.items),
+      openCheckout: set({ view: 'checkout' }),
+ 
+      showSheet: !!s.product, sheet, sizeOpts: sizeOptsOut, drizzles: DRIZZLE.map(topOf), crunchy: CRUNCH.map(topOf),
+      note: s.note, noteCount: s.note.length, setNote: (e) => this.setState({ note: e.target.value.slice(0, 100) }),
+      qty: s.qty, qtyUp: () => this.setState({ qty: s.qty + 1 }), qtyDown: () => this.setState({ qty: Math.max(1, s.qty - 1) }),
+      sheetTotal: fmt(unit * s.qty),
+      closeSheet: set({ product: null }),
+      addToCart: () => {
+        const names = [...DRIZZLE, ...CRUNCH].filter((t) => s.tops[t.id]).map((t) => t.label);
+        const sz = isBev ? '' : isTub ? (s.size === 't1' ? '1 litre' : '400 ml') : 'Size ' + s.size;
+        const detail = [sz, ...names, s.note ? '“' + s.note + '”' : ''].filter(Boolean).join(' · ') || 'Regular';
+        const line = { uid: s.uid, pid: prod.id, kind: prod.kind, name: prod.name, detail, unit, qty: s.qty };
+        this.setState({ cart: [...s.cart, line], uid: s.uid + 1, product: null });
+        this.showToast('Added to cart');
+      },
+ 
+      showCheckout: s.view === 'checkout', cartEmpty: s.cart.length === 0, cartFilled: s.cart.length > 0, lines,
+      closeCheckout: set({ view: 'app' }),
+      isDelivery: del, isPickup: !del,
+      deliveryCls: del ? 'on' : '', pickupCls: del ? '' : 'on',
+      setDelivery: set({ orderType: 'delivery' }), setPickup: set({ orderType: 'pickup' }),
+      addrs, branchOpts, slots, payOpts,
+      hasPack: tot.pack > 0, packLabel: fmt(tot.pack), packWhy: tot.packWhy,
+      feeTitle: del ? 'Delivery fee' : 'Delivery fee (pick-up)', feeLabel: fmt(tot.fee),
+      totalLabel: fmt(tot.total), sumLine,
+      hasBlock: !!tot.block, blockMsg: tot.block,
+      placeBlocked: blocked, placeLabel: blocked && tot.block ? 'Can’t place this order yet' : 'Place order · ' + fmt(tot.total),
+      placeOrder: () => {
+        if (blocked) return;
+        const b = BRANCHES.find((x) => x.id === s.branch);
+        const a = ADDRS.find((x) => x.id === s.addr);
+        const pay = PAYS.find((x) => x.id === s.pay);
+        const p = {
+          id: 'HC-' + (2048 + s.uid), type: s.orderType, totalLabel: fmt(tot.total), count: cartCount,
+          typeLabel: del ? 'Delivery' : 'Pick-up', payLabel: pay.label,
+          where: del ? 'To ' + a.name + ', ' + a.line : b.name + ' at ' + s.slot, online: s.pay !== 'cod', payId: s.pay
+        };
+        this.setState({ placed: p, view: 'tracking', cart: [], orderStep: p.online ? -1 : 0, countdown: 600 });
+      },
+ 
+      showTracking: s.view === 'tracking' && !!placed,
+      awaitingPay: s.orderStep === -1, cancelled: s.orderStep === -2, trackable: s.orderStep >= 0,
+      countdownLabel: mm + ':' + ss,
+      payTitle: s.placed && s.placed.payId === 'qr' ? 'Scan to pay with your banking app' : s.placed && s.placed.payId === 'momo' ? 'Scan with MoMo to pay' : 'Finish paying by card (VNPay)',
+      etaLine: placed ? (placed.type === 'delivery' ? 'Estimated delivery in 25 to 35 minutes' : 'Ready at ' + (placed.where.split(' at ')[1] || '')) : '',
+      timeline,
+      advanceLabel: s.orderStep >= 3 ? 'Order complete' : 'Demo: next status',
+      advance: () => {
+        if (s.orderStep === -1) this.setState({ orderStep: 0 });
+        else if (s.orderStep === 2) {
+          this.setState({ orderStep: 3, push: true });
+          clearTimeout(this.pushTimer);
+          this.pushTimer = setTimeout(() => this.setState({ push: false }), 8000);
+        } else if (s.orderStep < 3) this.setState({ orderStep: s.orderStep + 1 });
+      },
+      leaveTracking: set({ view: 'app', tab: 'menu' }),
+ 
+      showFeedback: s.view === 'feedback' && !!s.fb,
+      fb: { id: fb.id, typeLabel: fb.type === 'pickup' ? 'Pick-up' : 'Delivery' },
+      stars, ratingLabel: fb.rating ? STAR_LABELS[fb.rating - 1] : 'Tap a star to rate', noRating: fb.rating === 0,
+      hasOptions: fbOpts.length > 0, fbOpts,
+      comment: fb.comment, commentCount: fb.comment.length, setComment: (e) => this.patchFb({ comment: e.target.value.slice(0, 500) }),
+      photos, photoCount: fb.photos.length, hasPhotoErr: !!fb.err, photoErr: fb.err,
+      addPhoto: () => {
+        if (fb.photos.length >= 3) this.patchFb({ err: 'You can add up to 3 photos.' });
+        else this.patchFb({ photos: [...fb.photos, { n: fb.pn + 1 }], pn: fb.pn + 1, err: '' });
+      },
+      addBigPhoto: () => this.patchFb({ err: 'This photo is larger than 5 MB. Choose a smaller one.' }),
+      closeFeedback: set({ view: s.fb && s.fb.from === 'tracking' ? 'tracking' : 'app', fb: null }),
+      sendFeedback: () => {
+        if (fb.rating === 0) return;
+        this.setState({ sent: { ...s.sent, [fb.id]: true }, view: fb.from === 'tracking' ? 'tracking' : 'app', fb: null });
+        this.showToast('Thanks! Your feedback has been sent.');
+      },
+      showRateCard: s.orderStep === 3 && !!placed && !s.sent[placed.id],
+      showSentCard: s.orderStep === 3 && !!placed && !!s.sent[placed.id],
+      rateFromTracking: () => this.openFeedback(placed.id, placed.type, 'tracking'),
+      showPush: s.push && !!placed, openPush: () => this.openFeedback(placed.id, placed.type, 'tracking'),
+ 
+      hasToast: !!s.toast, toast: s.toast
+    };
+  }
+ 
+  statusText() {
+    const s = this.state;
+    if (s.orderStep === -1) return 'Awaiting payment';
+    const p = s.placed;
+    const labels = p.type === 'pickup' ? ['Received', 'Preparing', 'Ready for pick-up', 'Completed'] : ['Received', 'Preparing', 'Out for delivery', 'Completed'];
+    return labels[Math.max(0, s.orderStep)];
+  }
+}
+ 
+return Component;
+})();
+mountDC(Component, document.getElementById('tpl').textContent, document.getElementById('root'));
+</script>
+</body>
+</html>
