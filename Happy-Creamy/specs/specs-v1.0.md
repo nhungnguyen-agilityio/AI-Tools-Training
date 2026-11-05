@@ -155,5 +155,4 @@ Header navigation on desktop, bottom navigation bar on mobile:
 | Feature | Note |
 | --- | --- |
 | Customer cancellation and refunds | Not in the MVP. The only cancellation is the automatic cancel of an unpaid online order after 10 minutes (Section IV). |
-| Customer reviews | Star ratings, written reviews, review photos and the private feedback form are not in the MVP. |
 | Live rider map | Order tracking is a status timeline only (Section V). |
