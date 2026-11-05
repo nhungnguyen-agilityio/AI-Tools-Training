@@ -1,7 +1,3 @@
-Claude
-
-
-Readme · MD
 # Happy Creamy Web Application
  
 A responsive ice cream ordering web app for desktop and mobile web in Vietnam. Customers sign in, browse the menu, customize scoops and toppings, then order for in-house delivery or store pick-up.
