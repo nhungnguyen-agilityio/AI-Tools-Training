@@ -53,7 +53,6 @@ All prices are in VND. The full wording is in SRS Section IV.
 ## Out of MVP scope
  
 - Customer cancellation and refunds (unpaid online orders still auto-cancel after 10 minutes)
-- Customer reviews, star ratings, review photos and the private feedback form
 - Live rider map (tracking is a status timeline only)
 ## Status
  
