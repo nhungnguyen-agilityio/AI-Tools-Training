@@ -1,5 +1,3 @@
-FEATURE SPECIFICATION
-
 # Feedback Feature Spec
 
 Parent spec **Happy Creamy SRS 1.0 (MVP)**Version **1.0**Updated **5 Nov 2026**
