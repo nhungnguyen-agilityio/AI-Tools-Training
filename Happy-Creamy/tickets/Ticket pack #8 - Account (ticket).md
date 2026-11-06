@@ -12,6 +12,8 @@
   Then it appears in my list and I can pick it at checkout.
 - AC3 Given I have a saved address, When I delete it,
   Then it no longer shows at checkout.
+- AC4 Given I add a saved address 12 km from every branch, When I save it,
+  Then it is saved and shows a warning that it is outside our 10 km area; at checkout I cannot place a delivery order to it.
 
 **Scope:** Profile details and saved delivery addresses.
 
@@ -27,13 +29,14 @@
   Then I can log in with the new password and not the old one.
 - AC2 Given I am signed in, When I tap "Log out",
   Then I am sent to the sign-in screen.
+- AC3 Given I signed in with Google or Facebook, When I open Account,
+  Then I do not see "Change password".
+- AC4 Given I signed up with email, When I change my password to the same password,
+  Then I see an error and the password does not change.
 
 **Scope:** Password change and log out.
 
 **Non-scope:** forgot password (Authentication pack)
-
-**Open questions (for the client)**
-1. Google and Facebook users have no password here. Do they see "Change password"?
 
 ## Ticket 3: Switch language
 
@@ -45,10 +48,9 @@
   Then all screens show Vietnamese.
 - AC2 Given I switched to Vietnamese and closed the app, When I open it again,
   Then it is still in Vietnamese.
+- AC3 Given I am a new user, When I sign in for the first time,
+  Then the app is in Vietnamese.
 
 **Scope:** Language switch between Vietnamese and English.
 
 **Non-scope:** other languages; translating product names added later
-
-**Open questions (for the client)**
-1. What language does a new user get first: the browser language, or Vietnamese?

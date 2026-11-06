@@ -20,16 +20,19 @@ Type: Positive = expected to work, Negative = expected to be refused, Boundary =
 
 | ID | AC | Scenario | Test data and steps | Expected result | Type | Priority |
 |---|---|---|---|---|---|---|
-| TC-HC18-01 | AC1 | Notification for each change before Completed | Allow notifications; staff change the status to Preparing | A notification arrives | Positive | P1 |
-| TC-HC18-02 | AC1 | One notification per change | Staff change the status 3 times: Received, Preparing, Out for delivery | 3 notifications, one per change | Positive | P2 |
-| TC-HC18-03 | AC2 | Notifications blocked | Block notifications; staff change the status | No notification; timeline still updates | Negative | P1 |
+| TC-HC18-01 | AC1 | Push and bell item for each change before Completed | Push on in Account and allowed in the browser; staff change the status to Preparing | A push arrives and a new unread bell item "Your order HC-2048 is being prepared." appears | Positive | P1 |
+| TC-HC18-02 | AC1 | One push and one bell item per change | Staff change the status 3 times: Received, Preparing, Out for delivery | 3 pushes and 3 new bell items, one per change; the badge goes up by 3 | Positive | P2 |
+| TC-HC18-03 | AC2 | Push blocked: the bell list still fills | Block notifications in the browser; staff change the status | No push; a new bell item appears; the timeline still updates | Negative | P1 |
 | TC-HC18-04 | AC3 | iPhone Safari without Home Screen | Open the app on iPhone Safari, not added to Home Screen | No permission prompt is shown | Negative | P1 |
 | TC-HC18-05 | AC3 | iPhone Safari added to Home Screen | Add the site to the Home Screen; open it | Permission prompt can be shown | Positive | P2 |
 | TC-HC18-06 | AC1 | First visit asks once | Open the app on a supported browser | Permission is asked once; not again after a choice | Positive | P2 |
 | TC-HC18-07 | AC2 | User refuses the prompt | Tap "Block" on the prompt | App works normally with no error | Negative | P2 |
-| TC-HC18-08 | - | Tap a notification | Tap a status notification | Opens the app on that order (confirm the target with the client) | Positive | P3 |
+| TC-HC18-08 | - | Tap a status item in the bell list | Tap the unread item for an active order | Item is marked as read and the order opens in Active Orders | Positive | P2 |
 | TC-HC18-09 | Ans. 22 | Only the feedback notification at Completed | Allow notifications; staff set the order to Completed | The customer gets the feedback notification only, not a status notification | Negative | P1 |
 | TC-HC18-10 | Ans. 13 | No email or SMS when blocked | Block notifications; status changes | No email and no SMS is sent; the timeline still updates | Negative | P2 |
+| TC-HC18-11 | AC2 | Push switched off in Account | Turn "Push notifications" off in Account; staff change the status | No push; a new bell item appears | Negative | P2 |
+| TC-HC18-12 | AC3 | Cancelled for no payment | Place a MoMo order and do not pay for 10 minutes | Bell item "We didn't get your payment in 10 minutes, so we cancelled order HC-2048." appears | Positive | P1 |
+| TC-HC18-13 | AC1 | Status item texts | Move one order through all steps and read each bell item | Received "We got your order HC-2048.", Preparing "Your order HC-2048 is being prepared.", Out for delivery "Your order HC-2048 is on its way.", pick-up "Your order HC-2031 is ready for pick-up." | Positive | P2 |
 
 ## Ticket HC-19: See my order history
 

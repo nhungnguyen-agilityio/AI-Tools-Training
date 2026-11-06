@@ -14,13 +14,12 @@
   Then I am not asked for an email code.
 - AC4 Given the Google window is open, When I close it without approving,
   Then I stay signed out on the sign-in screen.
+- AC5 Given I signed up by email with nhung@example.com, When I sign in with Google using nhung@example.com,
+  Then I am signed in to the same account, with the same orders and saved addresses.
 
-**Scope:** Sign in with Google and Facebook.
+**Scope:** Sign in with Google and Facebook. One account per email: a Google or Facebook sign-in with an email that already has an account opens that account.
 
-**Non-scope:** email and password sign-in (ticket 2); linking two accounts
-
-**Open questions (for the client)**
-1. If a customer signs up by email and later uses Google with the same email, is it one account or two?
+**Non-scope:** email and password sign-in (ticket 2); linking accounts that use different emails
 
 ## Ticket 2: Sign up and sign in using email and password
 
@@ -40,13 +39,14 @@
   Then I see Home.
 - AC6 Given my email is verified, When I log in with a wrong password,
   Then I see an error and stay on the sign-in screen.
+- AC7 Given I received the 6-digit code 10 minutes ago and did not use it, When I enter it,
+  Then I see that the code expired and I can ask for a new code.
+- AC8 Given I entered 4 wrong codes, When I enter a 5th wrong code,
+  Then I can no longer try this code and I am asked to request a new one.
 
-**Scope:** Sign up with an email code check, log in, and sending signed-out users to the sign-in screen.
+**Scope:** Sign up with an email code check (valid 10 minutes, 5 tries), log in, and sending signed-out users to the sign-in screen. Password: 8 characters or more.
 
 **Non-scope:** Google and Facebook (ticket 1); password reset (ticket 3); phone number login
-
-**Open questions (for the client)**
-1. How long is the email code valid, and how many wrong tries are allowed? What are the password rules?
 
 ## Ticket 3: Forgot password
 
@@ -62,7 +62,11 @@
   Then I see an error and my password is not changed.
 - AC4 Given my password was just reset, When I log in with the old password,
   Then I see an error and I stay signed out.
+- AC5 Given I received the reset code 10 minutes ago and did not use it, When I enter it,
+  Then I see that the code expired and I can ask for a new code.
+- AC6 Given I entered 4 wrong reset codes, When I enter a 5th wrong code,
+  Then I can no longer try this code and I am asked to request a new one.
 
-**Scope:** Reset a password with an email code.
+**Scope:** Reset a password with an email code (valid 10 minutes, 5 tries).
 
 **Non-scope:** changing the password while signed in (Account pack); resetting Google or Facebook accounts

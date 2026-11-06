@@ -8,17 +8,14 @@
 **Acceptance criteria**
 - AC1 Given I chose Pick-up, When I open checkout,
   Then I can choose a branch and a time slot.
-- AC2 Given the branch opens at 10:30, When I look at the slots,
-  Then I see 15-minute slots such as 10:30, 10:45, 11:00, and none outside opening hours.
+- AC2 Given it is 10:12 and the branch is open from 08:00 to 22:00, When I look at the slots,
+  Then I see today only, in 15-minute steps starting at 10:45 (at least 30 minutes from now), and none after closing.
 - AC3 Given I chose Pick-up, When I look at the total,
   Then the delivery fee is 0đ.
 
-**Scope:** Branch choice, 15-minute slots, no delivery fee, no minimum order.
+**Scope:** Branch choice, 15-minute slots for today only (first slot at least 30 minutes away), no delivery fee, no minimum order.
 
 **Non-scope:** the order total (Order pack); changing the slot after ordering
-
-**Open questions (for the client)**
-1. How far ahead can a customer book (today only, or other days), and what is the shortest time before the first slot?
 
 ## Ticket 2: Pick up my ready order
 
@@ -32,10 +29,9 @@
   Then I get a notification.
 - AC3 Given my order is Ready for pick-up, When staff hand it over and set it to Completed,
   Then my order moves to Order History.
+- AC4 Given my order is Ready for pick-up and I arrive late, When I check my order,
+  Then it stays Ready for pick-up until staff set it to Completed.
 
 **Scope:** Pick-up status steps: Received, Preparing, Ready for pick-up, Completed.
 
 **Non-scope:** how staff change the status (Admin web app); cancelling a pick-up order
-
-**Open questions (for the client)**
-1. How long does the branch keep a ready order if the customer is late?

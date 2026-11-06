@@ -25,19 +25,20 @@
 - As a customer, I want a notification when my order status changes, so that I do not need to keep checking.
 
 **Acceptance criteria**
-- AC1 Given I allowed browser notifications, When store staff change my order's status,
-  Then I get a notification for each change.
-- AC2 Given I blocked browser notifications, When my order's status changes,
-  Then I get no notification and the timeline still updates.
-- AC3 Given I use iPhone Safari and have not added the site to the Home Screen, When I open the app,
+- AC1 Given push notifications are on in Account and my browser allows them, When store staff change my order's status to Received, Preparing, Out for delivery or Ready for pick-up,
+  Then I get a push and a new item appears in the bell list for each change.
+- AC2 Given push notifications are off in Account or my browser blocks them, When my order's status changes,
+  Then I get no push, the bell list still gets the item and the timeline still updates.
+- AC3 Given my order is unpaid after 10 minutes, When it is cancelled,
+  Then I get "We didn't get your payment in 10 minutes, so we cancelled order HC-2048." in the bell list.
+- AC4 Given my order is Out for delivery, When store staff set it to Completed,
+  Then I get only the feedback notification and no status notification.
+- AC5 Given I use iPhone Safari and have not added the site to the Home Screen, When I open the app,
   Then I am not asked for notification permission.
 
-**Scope:** Push notification on each status change (optional for the customer).
+**Scope:** Order status notifications: a bell item for every status change, and a push when the customer allows it.
 
-**Non-scope:** email or SMS; promotions; the feedback notification (Feedback ticket pack)
-
-**Open questions (for the client)**
-1. If notifications are blocked, should the customer get another message (email or SMS) when the status changes?
+**Non-scope:** email or SMS (not in the MVP); promotions; the bell list and the Account switch (Notifications pack); the feedback notification (Feedback pack)
 
 ## Ticket 3: See my order history
 
@@ -49,6 +50,8 @@
   Then I see each order with its number, date, type and total.
 - AC2 Given I have no past orders, When I open Order History,
   Then I see an empty list.
+- AC3 Given I placed an online order and did not pay within 10 minutes, When I open Order History,
+  Then the cancelled order is not listed.
 
 **Scope:** List of completed orders.
 

@@ -11,14 +11,11 @@
 - AC2 Given I am on Home, When I move to the next banner (swipe or tap a dot),
   Then the next banner shows.
 - AC3 Given I am on Home, When I tap a banner,
-  Then the menu opens on that offer's products.
+  Then nothing happens, because banners are display only.
 
-**Scope:** Banner carousel on Home.
+**Scope:** Display-only banner carousel on Home, with dots to move between banners. The "Order now" button sits below the dots.
 
-**Non-scope:** managing banners (Admin web app); personal recommendations
-
-**Open questions (for the client)**
-1. Who sets the banner pictures, and where does each banner open when tapped?
+**Non-scope:** managing banners (Admin web app); tappable banners or links; personal recommendations
 
 ## Ticket 2: Jump to the menu from Home
 
