@@ -1,5 +1,3 @@
-QA · HAPPY CREAMY
-
 # Feedback Test Matrix
 
 Feature **Order feedback**Based on **Feedback Feature Spec 1.0** and **Feedback Ticket Pack**Prepared **6 Nov 2026**
