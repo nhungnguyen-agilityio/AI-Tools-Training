@@ -14,13 +14,12 @@
   Then the item is removed.
 - AC4 Given my cart is empty, When I open the cart,
   Then I see that it is empty and I cannot place an order.
+- AC5 Given I have items in my cart, When I log out and log in again, on this or another device,
+  Then my cart still has the same items.
 
-**Scope:** Cart screen: change quantity, remove items, empty cart.
+**Scope:** Cart screen: change quantity, remove items, empty cart. The cart is kept on the account.
 
 **Non-scope:** coupons and vouchers; saving the cart for later
-
-**Open questions (for the client)**
-1. Is the cart kept when the customer logs out or changes device?
 
 ## Ticket 2: Deliver to my address
 
@@ -36,17 +35,14 @@
   Then it is 35,000đ.
 - AC4 Given my address is 11.8 km away, When I look at the screen,
   Then I see "Sorry, this address is outside our 10km delivery coverage." and I cannot place the order.
-- AC5 Given the nearest branch is closed, When I open checkout,
+- AC5 Given the nearest branch is closed (before 08:00 or from 22:00), When I open checkout,
   Then Delivery is disabled and I see the next opening time.
 - AC6 Given I denied location access, When I open checkout,
   Then I can type my address myself.
 
-**Scope:** Delivery address (location, saved or typed), road distance, 3 fee tiers, the 10 km limit, and delivery only in opening hours. In-house delivery only.
+**Scope:** Delivery address (location, saved or typed), road distance, 3 fee tiers, the 10 km limit, and delivery only in opening hours (every branch 08:00 to 22:00). In-house delivery only.
 
 **Non-scope:** the order total (ticket 3); live rider map; third-party delivery apps
-
-**Open questions (for the client)**
-1. What are the opening hours of each branch? The SRS only gives 08:30 to 21:30 as an example.
 
 ## Ticket 3: See the order total
 
@@ -83,10 +79,9 @@
   Then the order moves to Received.
 - AC5 Given 10 minutes pass with no payment, When the countdown reaches 00:00,
   Then the order is cancelled and I see "We didn't get your payment in 10 minutes, so we cancelled this order.".
+- AC6 Given my order was cancelled after 10 minutes, When my payment arrives afterwards,
+  Then the order stays cancelled and store staff refund me by hand.
 
-**Scope:** 4 payment methods, the 10-minute wait for online payments, and automatic cancel when unpaid.
+**Scope:** 4 payment methods, the 10-minute wait for online payments, and automatic cancel when unpaid. A late payment does not reopen the order.
 
 **Non-scope:** refunds; cancelling an order by the customer; saving cards
-
-**Open questions (for the client)**
-1. If a payment arrives after the order was cancelled, what happens? Refunds are out of the MVP.

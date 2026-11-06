@@ -8,17 +8,14 @@
 **Acceptance criteria**
 - AC1 Given I allowed location access, When I open Stores,
   Then I see a map with nearby branches and a list with each address and distance, for example 1.2 km.
-- AC2 Given I look at a branch in the list, When I check its status,
-  Then I see "Open now" or "Closing soon".
+- AC2 Given a branch closes at 22:00, When I check its status at 21:25 and at 21:35,
+  Then I see "Open now" at 21:25 and "Closing soon" at 21:35.
 - AC3 Given I denied location access, When I open Stores,
   Then I still see the list of branches without distances.
 
-**Scope:** Map, branch list, distance and live status.
+**Scope:** Map, branch list, distance and live status ("Closing soon" in the last 30 minutes). Branches show "Open daily 08:00 to 22:00".
 
 **Non-scope:** choosing a branch for an order (Pick-up pack); branch photos and reviews
-
-**Open questions (for the client)**
-1. How many minutes before closing does a branch show "Closing soon"?
 
 ## Ticket 2: Get directions or call a branch
 

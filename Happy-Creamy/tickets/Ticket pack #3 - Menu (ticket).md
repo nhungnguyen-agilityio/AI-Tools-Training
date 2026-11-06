@@ -12,13 +12,14 @@
   Then I see its picture, name, base price and badge (New, Hot or Best-Seller).
 - AC3 Given I am on the All tab, When I tap "Cups",
   Then I see only cups.
+- AC4 Given a product is sold out at my branch, When I look at its card,
+  Then the card is greyed out with a "Sold out" badge and I cannot add it to the cart.
+- AC5 Given a product is sold out at one branch only, When I switch to a branch that still has it,
+  Then the card is normal and I can add it.
 
-**Scope:** Product list, 7 category tabs and product cards.
+**Scope:** Product list, 7 category tabs and product cards. Sold-out products are shown greyed with "Sold out", per branch.
 
 **Non-scope:** search; favorites; managing products and prices (Admin web app)
-
-**Open questions (for the client)**
-1. What does the customer see when a product is sold out, and can it be sold out in one branch only?
 
 ## Ticket 2: Customize a product
 
@@ -49,7 +50,9 @@
   Then the line total is 104,000đ.
 - AC2 Given I finished choosing options, When I tap "Add to cart",
   Then I see "Added to cart" and the cart bar shows the item count and subtotal.
-- AC3 Given I already added Mint Cloud Cup Size M, When I add Mint Cloud Cup Size L,
+- AC3 Given I already added Mint Cloud Cup Size M with no toppings, When I add the same product, size and toppings again,
+  Then the cart has 1 line with quantity 2.
+- AC4 Given I already added Mint Cloud Cup Size M, When I add Mint Cloud Cup Size L,
   Then the cart has 2 separate lines.
 
 **Scope:** Quantity, "Add to cart" and the cart bar.
