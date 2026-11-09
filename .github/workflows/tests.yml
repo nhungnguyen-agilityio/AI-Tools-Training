@@ -1,0 +1,64 @@
+name: Happy Creamy tests
+
+# Runs the Playwright tests for the Happy Creamy Desktop and Mobile mock-ups (Chromium only).
+# The apps are served by the webServer in playwright.config.js (http-server on port 8080).
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'Happy-Creamy/apps/**'
+      - 'Happy-Creamy/tests/Playwright-tests/**'
+      - '.github/workflows/tests.yml'
+  pull_request:
+    paths:
+      - 'Happy-Creamy/apps/**'
+      - 'Happy-Creamy/tests/Playwright-tests/**'
+      - '.github/workflows/tests.yml'
+  workflow_dispatch:
+
+concurrency:
+  group: happy-creamy-tests-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  playwright:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    defaults:
+      run:
+        working-directory: Happy-Creamy/tests/Playwright-tests
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: Happy-Creamy/tests/Playwright-tests/package-lock.json
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run Playwright tests
+        run: npx playwright test
+        env:
+          CI: 'true'
+
+      - name: Upload HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: Happy-Creamy/tests/Playwright-tests/playwright-report/
+          retention-days: 14
+
+      - name: Upload failure screenshots and traces
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: Happy-Creamy/tests/Playwright-tests/test-results/
+          retention-days: 7
