@@ -58,6 +58,19 @@ textarea.field{padding:12px 16px;min-height:104px;resize:none;line-height:1.4}
 .phx{position:absolute;top:-14px;right:-14px;width:44px;height:44px;display:flex;align-items:center;justify-content:center}
 .phx span{width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;line-height:1}
 .msg{padding:10px 14px;border-radius:14px;background:var(--butter);color:var(--butterink);font-weight:700;font-size:14px;line-height:1.4}
+.bell{position:relative;width:44px;height:44px;flex:none;display:flex;align-items:center;justify-content:center;border-radius:50%;background:#fff;border:1.5px solid var(--line)}
+.bell:hover{border-color:var(--pink)}
+.badge{position:absolute;top:-5px;right:-5px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--pink);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #F6FBF9}
+.card.unread{background:var(--blush);border-color:var(--pink2)}
+.nitem{width:100%;padding:12px 14px;display:flex;gap:12px;align-items:flex-start;border-radius:16px}
+.nitem:hover{border-color:var(--pink)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.swbtn{width:56px;height:44px;flex:none;display:flex;align-items:center;justify-content:center}
+.swtrack{width:52px;height:32px;border-radius:99px;background:#9DBDB8;position:relative;transition:background .15s}
+.swknob{position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:left .15s}
+.swbtn.on .swtrack{background:var(--pink)}
+.swbtn.on .swknob{left:23px}
+@media (prefers-reduced-motion:reduce){.swtrack,.swknob{transition:none}}
 </style>
  
 <style>
@@ -127,10 +140,56 @@ textarea.field{padding:12px 16px;min-height:104px;resize:none;line-height:1.4}
       <button type="button" class="nav {{nav.account}}" onClick="{{goAccount}}">Account</button>
     </nav>
     <div style="display:flex;align-items:center;gap:10px;font-weight:800;font-size:14px">
+      <button type="button" class="bell" aria-label="{{bellAria}}" aria-haspopup="dialog" aria-expanded="{{bellExp}}" onClick="{{toggleNotifs}}">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F4A45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 1 1 12 0c0 6 2 7.5 2 7.5H4S6 15 6 9z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+        <sc-if value="{{hasUnread}}" hint-placeholder-val="{{ false }}"><span class="badge" aria-hidden="true">{{unreadLabel}}</span></sc-if>
+      </button>
       <span style="width:36px;height:36px;border-radius:50%;background:var(--rose);display:flex;align-items:center;justify-content:center;font-family:Fredoka">N</span>Nhung
       <span class="bd bdbest" style="margin-left:6px">{{cartCount}} in cart</span>
     </div>
   </header>
+
+  <sc-if value="{{showNotifs}}" hint-placeholder-val="{{ false }}">
+  <button type="button" aria-label="Close notifications" onClick="{{closeNotifs}}" style="position:fixed;inset:0;z-index:39;width:100%;height:100%;background:transparent;cursor:default"></button>
+  <div role="dialog" aria-label="Notifications" style="position:absolute;top:70px;right:48px;z-index:40;width:420px;max-width:calc(100% - 32px);max-height:560px;display:flex;flex-direction:column;background:#fff;border:1.5px solid var(--line);border-radius:24px;box-shadow:0 20px 48px rgba(15,74,69,.2)">
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px 10px;flex:none">
+      <h2 style="font-size:22px">Notifications</h2>
+      <sc-if value="{{canMarkAll}}" hint-placeholder-val="{{ true }}">
+        <button type="button" class="link" style="min-height:44px;padding:0 4px;font-size:14px" onClick="{{markAll}}">Mark all as read</button>
+      </sc-if>
+    </div>
+    <div style="overflow-y:auto;padding:4px 14px 16px;display:flex;flex-direction:column;gap:8px">
+      <sc-if value="{{noNotifs}}" hint-placeholder-val="{{ false }}">
+        <div style="padding:20px 8px;font-weight:600;color:var(--muted);line-height:1.45">No notifications yet. Order updates and rating requests will show up here.</div>
+      </sc-if>
+      <sc-for list="{{notifs}}" as="n" hint-placeholder-count="3">
+        <button type="button" class="card nitem {{n.cls}}" onClick="{{n.open}}">
+          <span class="tile t0" style="width:40px;height:40px;border-radius:12px;flex:none">
+            <sc-if value="{{n.isFb}}" hint-placeholder-val="{{ false }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A766E" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg></sc-if>
+            <sc-if value="{{n.isSt}}" hint-placeholder-val="{{ true }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A766E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg></sc-if>
+          </span>
+          <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+            <span style="font-weight:800;font-size:15px;line-height:1.25">{{n.title}}</span>
+            <span style="font-weight:600;font-size:13.5px;color:var(--muted);line-height:1.35">{{n.msg}}</span>
+            <span style="font-weight:700;font-size:12.5px;color:var(--muted);margin-top:2px">{{n.meta}}</span>
+          </span>
+          <sc-if value="{{n.unread}}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="width:10px;height:10px;border-radius:50%;background:var(--pink);flex:none;margin-top:6px"></span><span class="sr">Unread</span></sc-if>
+        </button>
+      </sc-for>
+    </div>
+  </div>
+  </sc-if>
+
+  <sc-if value="{{showPush}}" hint-placeholder-val="{{ false }}">
+  <button type="button" onClick="{{openPush}}" style="position:fixed;top:16px;right:24px;z-index:60;width:360px;max-width:calc(100% - 32px);background:#fff;border-radius:20px;border:1.5px solid var(--line);box-shadow:0 10px 28px rgba(15,74,69,.22);padding:12px 14px;display:flex;gap:12px;align-items:center">
+    <span class="tile t0" style="width:40px;height:40px;border-radius:12px;flex:none;font-family:Fredoka;font-weight:600;color:var(--pink)">HC</span>
+    <span style="min-width:0;display:flex;flex-direction:column">
+      <span style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--muted)"><span>Happy Creamy</span><span>now</span></span>
+      <span style="font-weight:800;font-size:15px">{{push.title}}</span>
+      <span style="font-weight:600;font-size:13.5px;color:var(--muted)">{{push.msg}}</span>
+    </span>
+  </button>
+  </sc-if>
  
   <sc-if value="{{isHome}}" hint-placeholder-val="{{ false }}">
   <section style="padding:28px 48px 0">
@@ -139,7 +198,6 @@ textarea.field{padding:12px 16px;min-height:104px;resize:none;line-height:1.4}
         <span class="bd bdnew" style="align-self:flex-start">New arrivals</span>
         <h1 style="font-size:44px;line-height:1.05">Coconut Pandan has landed.</h1>
         <p style="margin:0;font-weight:700;font-size:17px">Creamy coconut with a ribbon of pandan. Delivered within 10 km, or ready at your nearest shop.</p>
-        <button type="button" class="btn sm" style="align-self:flex-start;margin-top:6px" onClick="{{showNew}}">See what's new</button>
       </div>
       <svg viewBox="0 0 80 80" width="170" height="170" aria-hidden="true">
         <circle cx="40" cy="30" r="17" fill="#8ED1B0"/><circle cx="34" cy="26" r="3.5" fill="#fff" opacity=".7"/>
@@ -195,6 +253,7 @@ textarea.field{padding:12px 16px;min-height:104px;resize:none;line-height:1.4}
           <button type="button" onClick="{{b.pick}}" style="display:flex;flex-direction:column;gap:4px;min-height:44px">
             <span style="display:flex;justify-content:space-between;gap:8px"><span style="font-weight:800;font-size:16px">{{b.name}}</span><span style="font-weight:800;font-size:13px;color:var(--muted)">{{b.km}} km</span></span>
             <span style="font-weight:600;font-size:13.5px;color:var(--muted)">{{b.addr}}</span>
+            <span style="font-weight:600;font-size:13px;color:var(--muted)">Open daily 08:00 to 22:00</span>
             <span class="bd {{b.st}}" style="align-self:flex-start;margin-top:2px">{{b.status}}</span>
           </button>
           <div style="display:flex;gap:8px">
@@ -219,14 +278,27 @@ textarea.field{padding:12px 16px;min-height:104px;resize:none;line-height:1.4}
       <button type="button" class="chip {{tabHistCls}}" onClick="{{showHistory}}">Order history</button>
     </div>
     <sc-if value="{{showActiveList}}" hint-placeholder-val="{{ true }}">
+      <sc-if value="{{hasActive}}" hint-placeholder-val="{{ false }}">
+        <div class="card" style="padding:18px;display:flex;flex-direction:column;gap:8px;background:var(--blush)">
+          <span style="display:flex;justify-content:space-between;font-weight:800"><span>{{ao.title}}</span><span>{{ao.total}}</span></span>
+          <span style="font-weight:600;font-size:14px;color:var(--muted)">{{ao.meta}}</span>
+          <span class="bd bdbest" style="align-self:flex-start">{{ao.status}}</span>
+          <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:6px">
+            <button type="button" class="btn sm" onClick="{{advanceOrder}}">Demo: next status</button>
+            <span style="font-size:12.5px;font-weight:600;color:var(--muted)">In the real app, shop staff update the status and you get a notification.</span>
+          </div>
+        </div>
+      </sc-if>
+      <sc-if value="{{noActive}}" hint-placeholder-val="{{ true }}">
       <div class="card" style="padding:22px;display:flex;flex-direction:column;gap:10px;align-items:flex-start">
         <div style="font-weight:800;font-size:17px">No orders on the way</div>
         <div style="font-weight:600;color:var(--muted)">Feeling something cold?</div>
         <button type="button" class="btn sm" onClick="{{goMenu}}">Browse the menu</button>
       </div>
+      </sc-if>
     </sc-if>
     <sc-if value="{{showThanks}}" hint-placeholder-val="{{ false }}">
-      <div role="status" style="padding:12px 14px;border-radius:14px;background:var(--mint);color:var(--mintink);font-weight:800;font-size:14px">Thanks! Your feedback has been sent.</div>
+      <div role="status" style="padding:12px 14px;border-radius:14px;background:var(--mint);color:var(--mintink);font-weight:800;font-size:14px">{{notice}}</div>
     </sc-if>
     <sc-if value="{{showHistoryList}}" hint-placeholder-val="{{ false }}">
       <div style="display:flex;flex-direction:column;gap:10px">
@@ -254,6 +326,13 @@ textarea.field{padding:12px 16px;min-height:104px;resize:none;line-height:1.4}
       <sc-for list="{{settings}}" as="r" hint-placeholder-count="4">
         <div style="display:flex;align-items:center;justify-content:space-between;min-height:52px;border-bottom:1.5px solid var(--line);font-weight:700"><span>{{r.label}}</span><span style="font-size:13.5px;color:var(--muted);font-weight:600">{{r.value}}</span></div>
       </sc-for>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:68px;padding:8px 0;border-bottom:1.5px solid var(--line)">
+        <div style="min-width:0">
+          <div id="pushlbl" style="font-weight:700">Push notifications</div>
+          <div style="font-size:13px;color:var(--muted);font-weight:600;line-height:1.35">Order updates and rating requests. Your notification list fills either way.</div>
+        </div>
+        <button type="button" role="switch" aria-labelledby="pushlbl" aria-checked="{{pushAria}}" class="swbtn {{pushCls}}" onClick="{{togglePush}}"><span class="swtrack"><span class="swknob"></span></span></button>
+      </div>
     </div>
     <button type="button" class="btn ghost" style="align-self:flex-start;width:auto" onClick="{{logout}}">Log out</button>
   </section>
@@ -266,7 +345,7 @@ textarea.field{padding:12px 16px;min-height:104px;resize:none;line-height:1.4}
     <section style="flex:999 1 560px;min-width:0;display:flex;flex-direction:column;gap:20px">
       <div style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px">
         <h2 style="font-size:32px">Menu</h2>
-        <span style="font-weight:700;color:var(--muted);font-size:14px">Open 08:30 – 21:30 · Delivery up to 10 km</span>
+        <span style="font-weight:700;color:var(--muted);font-size:14px">Open 08:00 – 22:00 · Delivery up to 10 km</span>
       </div>
       <div style="display:flex;flex-wrap:wrap;gap:8px">
         <sc-for list="{{cats}}" as="c" hint-placeholder-count="7">
@@ -571,6 +650,20 @@ function optionsFor(rating, type) {
   const list = rating === 0 ? [] : rating <= 2 ? PROBLEM : rating === 3 ? PRAISE.concat(PROBLEM) : PRAISE;
   return list.filter((o) => !o.del || type === 'delivery');
 }
+const FB_MSG = 'How was your ice cream? Leave a quick review to help us serve you better!';
+const SEED_NOTIFS = [
+  { id: 'n3', kind: 'fb', order: 'HC-2031', type: 'delivery', title: 'Order Delivered! 🍦', msg: FB_MSG, time: '2 days ago', read: false },
+  { id: 'n2', kind: 'fb', order: 'HC-2012', type: 'pickup', title: 'Order Completed! 🍦', msg: FB_MSG, time: '6 days ago', read: false },
+  { id: 'n1', kind: 'fb', order: 'HC-1987', type: 'delivery', title: 'Order Delivered! 🍦', msg: FB_MSG, time: '27 days ago', read: true }
+];
+function statusNotif(step, o) {
+  const pick = o.type === 'pickup';
+  const t = [['Order received', 'We have your order and the shop is on it.'], ['Preparing your order', 'We are scooping and packing.'], pick ? ['Ready for pick-up', 'Come say hi at the counter.'] : ['Out for delivery', 'Your rider is on the way.']][step];
+  return { kind: 'st', order: o.id, type: o.type, title: t[0], msg: t[1] };
+}
+function feedbackNotif(o) {
+  return { kind: 'fb', order: o.id, type: o.type, title: o.type === 'pickup' ? 'Order Completed! 🍦' : 'Order Delivered! 🍦', msg: FB_MSG };
+}
 const BADGE_CLS = { 'New': 'bdnew', 'Hot': 'bdhot', 'Best-Seller': 'bdbest' };
 const KIND_CAT = { cup: 'cups', cone: 'cones', tub: 'tubs', bev: 'bev' };
  
@@ -585,9 +678,31 @@ function artOf(p) {
 }
  
 class Component extends DCLogic {
-  state = { signedIn: false, authMode: 'login', authStep: 'form', email: '', otp: '', tab: 'menu', branch: 'b1', ordersTab: 'active', cat: 'all', cart: [{ pid: 'p1', qty: 2 }, { pid: 'p7', qty: 1 }], orderType: 'delivery', addr: 'a2', slot: '10:45', ordered: false, fb: null, sent: {}, thanks: false };
+  state = { signedIn: false, authMode: 'login', authStep: 'form', email: '', otp: '', tab: 'menu', branch: 'b1', ordersTab: 'active', cat: 'all', cart: [{ pid: 'p1', qty: 2 }, { pid: 'p7', qty: 1 }], orderType: 'delivery', addr: 'a2', slot: '10:45', ordered: false, fb: null, sent: {}, notice: '', pushId: null, pushOn: true, notifs: SEED_NOTIFS, nid: 100, bellOpen: false, ord: null, oid: 2049 };
  
   patchFb(o) { this.setState({ fb: { ...this.state.fb, ...o } }); }
+
+  notify(extra, n) {
+    const s = this.state;
+    const item = { read: false, time: 'Just now', ...n, id: 'n' + s.nid };
+    this.setState({ ...extra, notifs: [item, ...s.notifs], nid: s.nid + 1, pushId: s.pushOn ? item.id : s.pushId });
+    clearTimeout(this.pushTimer);
+    if (s.pushOn) this.pushTimer = setTimeout(() => this.setState({ pushId: null }), 6000);
+  }
+
+  openNotif(n) {
+    const s = this.state, o = s.ord;
+    clearTimeout(this.pushTimer);
+    const base = { notifs: s.notifs.map((x) => (x.id === n.id ? { ...x, read: true } : x)), pushId: null, bellOpen: false, tab: 'account', notice: '' };
+    if (n.kind === 'st') {
+      this.setState({ ...base, ordersTab: o && o.id === n.order && o.step < 3 ? 'active' : 'history' });
+      return;
+    }
+    const ago = o && o.id === n.order ? 0 : (HISTORY.find((h) => h.id === n.order) || { ago: 0 }).ago;
+    if (s.sent[n.order]) this.setState({ ...base, ordersTab: 'history', notice: 'Feedback for ' + n.order + ' was already sent.' });
+    else if (ago >= 7) this.setState({ ...base, ordersTab: 'history', notice: 'The 7-day window to rate ' + n.order + ' has ended.' });
+    else this.setState({ ...base, ordersTab: 'history', fb: { id: n.order, type: n.type, rating: 0, opts: {}, comment: '', photos: [], pn: 0, err: '' } });
+  }
  
   renderVals() {
     const s = this.state;
@@ -636,6 +751,13 @@ class Component extends DCLogic {
       { id: 'b3', name: 'Happy Creamy Phu My Hung', addr: '9 Nguyen Luong Bang, District 7', km: 8.9, status: 'Open now', st: 'bdbest', x: 80, y: 165 }
     ];
     const quickDefs = [['Best-Sellers', 'best', PRODUCTS[2], 0], ['Cups', 'cups', PRODUCTS[0], 3], ['Cones', 'cones', PRODUCTS[1], 1], ['Take-away Tubs', 'tubs', PRODUCTS[6], 2]];
+    const unread = s.notifs.filter((n) => !n.read).length;
+    const notifList = s.notifs.map((n) => ({ ...n, cls: n.read ? '' : 'unread', isFb: n.kind === 'fb', isSt: n.kind === 'st', unread: !n.read, meta: 'Order ' + n.order + ' · ' + n.time, open: () => this.openNotif(n) }));
+    const pushN = s.pushId ? s.notifs.find((n) => n.id === s.pushId) : null;
+    const ord = s.ord;
+    const hasActive = !!ord && ord.step < 3;
+    const stepLabels = ord && ord.type === 'pickup' ? ['Received', 'Preparing', 'Ready for pick-up', 'Completed'] : ['Received', 'Preparing', 'Out for delivery', 'Completed'];
+    const histSrc = (ord && ord.step === 3 ? [{ id: ord.id, type: ord.type, total: ord.total, date: 'Today', ago: 0 }] : []).concat(HISTORY);
     const reg = s.authMode === 'register';
     const fb = s.fb || { id: '', type: 'delivery', rating: 0, opts: {}, comment: '', photos: [], err: '' };
     const fbOpts = optionsFor(fb.rating, fb.type);
@@ -651,7 +773,22 @@ class Component extends DCLogic {
       toggleAuth: () => this.setState({ authMode: reg ? 'login' : 'register' }),
       submitAuth: () => (reg ? this.setState({ authStep: 'otp', otp: '' }) : this.setState({ signedIn: true, tab: 'home' })),
       verifyOtp: () => this.setState({ signedIn: true, authStep: 'form', authMode: 'login', tab: 'home' }),
-      logout: () => this.setState({ signedIn: false, cart: [], tab: 'home' }),
+      logout: () => this.setState({ signedIn: false, cart: [], tab: 'home', ord: null, pushId: null, bellOpen: false }),
+      bellAria: unread ? 'Notifications, ' + unread + ' unread' : 'Notifications', bellExp: String(s.bellOpen), hasUnread: unread > 0, unreadLabel: unread > 99 ? '99+' : String(unread),
+      toggleNotifs: () => this.setState({ bellOpen: !s.bellOpen }), closeNotifs: () => this.setState({ bellOpen: false }),
+      showNotifs: s.bellOpen, notifs: notifList, noNotifs: notifList.length === 0, canMarkAll: unread > 0,
+      markAll: () => this.setState({ notifs: s.notifs.map((n) => ({ ...n, read: true })) }),
+      pushOn: s.pushOn, pushAria: String(s.pushOn), pushCls: s.pushOn ? 'on' : '',
+      togglePush: () => this.setState({ pushOn: !s.pushOn, pushId: null }),
+      showPush: !!pushN, push: pushN ? { title: pushN.title, msg: pushN.msg } : { title: '', msg: '' }, openPush: () => pushN && this.openNotif(pushN),
+      hasActive, noActive: !hasActive,
+      ao: ord ? { title: 'Order ' + ord.id, total: ord.total, meta: (ord.type === 'pickup' ? 'Pick-up' : 'Delivery') + ' · ' + ord.count + ' items', status: stepLabels[Math.min(ord.step, 3)] } : { title: '', total: '', meta: '', status: '' },
+      advanceOrder: () => {
+        if (!ord || ord.step >= 3) return;
+        // Every status change adds a bell item; Completed adds only the feedback request.
+        if (ord.step === 2) this.notify({ ord: { ...ord, step: 3 } }, feedbackNotif(ord));
+        else this.notify({ ord: { ...ord, step: ord.step + 1 } }, statusNotif(ord.step + 1, ord));
+      },
       tab: s.tab,
       nav: { home: s.tab === 'home' ? 'on' : '', menu: s.tab === 'menu' ? 'on' : '', stores: s.tab === 'stores' ? 'on' : '', account: s.tab === 'account' ? 'on' : '' },
       goHome: tab('home'), goMenu: tab('menu'), goStores: tab('stores'), goAccount: tab('account'),
@@ -663,15 +800,15 @@ class Component extends DCLogic {
       tabActiveCls: s.ordersTab === 'active' ? 'on' : '', tabHistCls: s.ordersTab === 'history' ? 'on' : '',
       showActive: () => this.setState({ ordersTab: 'active' }), showHistory: () => this.setState({ ordersTab: 'history' }),
       showActiveList: s.ordersTab === 'active', showHistoryList: s.ordersTab === 'history',
-      history: HISTORY.map((h) => {
+      history: histSrc.map((h) => {
         const sent = !!s.sent[h.id], open = h.ago < 7, left = 7 - h.ago;
         return {
           title: 'Order ' + h.id, total: h.total, meta: (h.type === 'pickup' ? 'Pick-up' : 'Delivery') + ' · Completed · ' + h.date,
           canRate: open && !sent, sent, ended: !open && !sent, left: left === 1 ? '1 day left to rate' : left + ' days left to rate',
-          rate: () => this.setState({ thanks: false, fb: { id: h.id, type: h.type, rating: 0, opts: {}, comment: '', photos: [], pn: 0, err: '' } })
+          rate: () => this.setState({ notice: '', fb: { id: h.id, type: h.type, rating: 0, opts: {}, comment: '', photos: [], pn: 0, err: '' } })
         };
       }),
-      showThanks: s.thanks,
+      showThanks: !!s.notice, notice: s.notice,
       showFeedback: !!s.fb,
       fb: { id: fb.id, typeLabel: fb.type === 'pickup' ? 'Pick-up' : 'Delivery' },
       stars: [1, 2, 3, 4, 5].map((n) => ({
@@ -697,7 +834,7 @@ class Component extends DCLogic {
       },
       addBigPhoto: () => this.patchFb({ err: 'This photo is larger than 5 MB. Choose a smaller one.' }),
       closeFeedback: () => this.setState({ fb: null }),
-      sendFeedback: () => { if (fb.rating) this.setState({ sent: { ...s.sent, [fb.id]: true }, fb: null, thanks: true }); },
+      sendFeedback: () => { if (fb.rating) this.setState({ sent: { ...s.sent, [fb.id]: true }, fb: null, notice: 'Thanks! Your feedback has been sent.' }); },
       settings: [{ label: 'Profile', value: 'Nhung Nguyen' }, { label: 'Saved addresses', value: '3 saved' }, { label: 'Password', value: 'Change' }, { label: 'Language', value: 'English' }],
       cartCount: s.cart.reduce((n, l) => n + l.qty, 0), cats, products, lines,
       cartEmpty: s.cart.length === 0,
@@ -711,7 +848,11 @@ class Component extends DCLogic {
       sumLine: fmt(items) + ' + ' + fmt(pack) + ' + ' + fmt(fee) + ' = ' + fmt(total),
       hasBlock: !!block, blockMsg: block, blocked,
       checkoutLabel: blocked && block ? 'Can’t place this order yet' : 'Checkout · ' + fmt(total),
-      checkout: () => { if (!blocked) this.setState({ ordered: true, cart: [] }); },
+      checkout: () => {
+        if (blocked) return;
+        const o = { id: 'HC-' + s.oid, type: s.orderType, total: fmt(total), count: s.cart.reduce((n, l) => n + l.qty, 0), step: 0 };
+        this.notify({ ordered: true, cart: [], ord: o, oid: s.oid + 1 }, statusNotif(0, o));
+      },
       ordered: s.ordered
     };
   }
