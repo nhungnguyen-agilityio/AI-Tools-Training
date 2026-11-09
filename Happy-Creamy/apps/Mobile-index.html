@@ -71,6 +71,16 @@ textarea.field{padding:12px 16px;min-height:104px;resize:none;line-height:1.4}
 .phx{position:absolute;top:-14px;right:-14px;width:44px;height:44px;display:flex;align-items:center;justify-content:center}
 .phx span{width:26px;height:26px;border-radius:50%;background:var(--ink);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:15px;line-height:1}
 .msg{padding:10px 14px;border-radius:14px;background:var(--butter);color:var(--butterink);font-weight:700;font-size:14px;line-height:1.4}
+.bell{position:relative;width:44px;height:44px;flex:none;display:flex;align-items:center;justify-content:center;border-radius:50%;background:#fff;border:1.5px solid var(--line)}
+.badge{position:absolute;top:-5px;right:-5px;min-width:20px;height:20px;padding:0 5px;border-radius:999px;background:var(--pink);color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;border:2px solid #F6FBF9}
+.card.unread{background:var(--blush);border-color:var(--pink2)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.swbtn{width:56px;height:44px;flex:none;display:flex;align-items:center;justify-content:center}
+.swtrack{width:52px;height:32px;border-radius:99px;background:#9DBDB8;position:relative;transition:background .15s}
+.swknob{position:absolute;top:3px;left:3px;width:26px;height:26px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:left .15s}
+.swbtn.on .swtrack{background:var(--pink)}
+.swbtn.on .swknob{left:23px}
+@media (prefers-reduced-motion:reduce){.swtrack,.swknob{transition:none}}
 </style>
  
 <style>
@@ -157,6 +167,10 @@ body{display:flex;justify-content:center;align-items:flex-start;padding:24px 0}
         <h1 style="font-size:26px;color:var(--pink)">Happy Creamy</h1>
         <div style="font-weight:700;color:var(--muted);font-size:14px">Hi, Nhung! What are we scooping today?</div>
       </div>
+      <button type="button" class="bell" aria-label="{{bellAria}}" onClick="{{openNotifs}}">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F4A45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 1 1 12 0c0 6 2 7.5 2 7.5H4S6 15 6 9z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+        <sc-if value="{{hasUnread}}" hint-placeholder-val="{{ false }}"><span class="badge" aria-hidden="true">{{unreadLabel}}</span></sc-if>
+      </button>
     </div>
  
     <div>
@@ -164,13 +178,13 @@ body{display:flex;justify-content:center;align-items:flex-start;padding:24px 0}
         <span class="bd bdnew" style="align-self:flex-start">{{slide.tag}}</span>
         <h2 style="font-size:26px;line-height:1.1">{{slide.title}}</h2>
         <div style="font-weight:700;font-size:14px;opacity:.9">{{slide.sub}}</div>
-        <button type="button" class="btn sm" style="align-self:flex-start;margin-top:4px" onClick="{{goOrderNow}}">Order now</button>
       </div>
       <div style="display:flex;justify-content:center;gap:4px;margin-top:6px">
         <sc-for list="{{dots}}" as="d" hint-placeholder-count="3">
           <button type="button" class="dot {{d.cls}}" aria-label="{{d.aria}}" onClick="{{d.pick}}" style="min-width:8px;margin:0 3px"></button>
         </sc-for>
       </div>
+      <button type="button" class="btn" style="margin-top:14px" onClick="{{goOrderNow}}">Order now</button>
     </div>
  
     <div>
@@ -225,7 +239,10 @@ body{display:flex;justify-content:center;align-items:flex-start;padding:24px 0}
   <!-- MENU -->
   <sc-if value="{{isMenu}}" hint-placeholder-val="{{ false }}">
   <div style="padding:22px 20px 110px;display:flex;flex-direction:column;gap:16px">
-    <h1 style="font-size:28px">Menu</h1>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><h1 style="font-size:28px">Menu</h1><button type="button" class="bell" aria-label="{{bellAria}}" onClick="{{openNotifs}}">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F4A45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 1 1 12 0c0 6 2 7.5 2 7.5H4S6 15 6 9z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+        <sc-if value="{{hasUnread}}" hint-placeholder-val="{{ false }}"><span class="badge" aria-hidden="true">{{unreadLabel}}</span></sc-if>
+      </button></div>
     <div class="noscroll" style="display:flex;gap:8px;overflow-x:auto;margin:0 -20px;padding:0 20px 2px">
       <sc-for list="{{cats}}" as="c" hint-placeholder-count="7">
         <button type="button" class="chip {{c.cls}}" onClick="{{c.pick}}">{{c.label}}</button>
@@ -263,7 +280,10 @@ body{display:flex;justify-content:center;align-items:flex-start;padding:24px 0}
   <!-- STORES -->
   <sc-if value="{{isStores}}" hint-placeholder-val="{{ false }}">
   <div style="padding:22px 20px 28px;display:flex;flex-direction:column;gap:16px">
-    <h1 style="font-size:28px">Stores</h1>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><h1 style="font-size:28px">Stores</h1><button type="button" class="bell" aria-label="{{bellAria}}" onClick="{{openNotifs}}">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F4A45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 1 1 12 0c0 6 2 7.5 2 7.5H4S6 15 6 9z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+        <sc-if value="{{hasUnread}}" hint-placeholder-val="{{ false }}"><span class="badge" aria-hidden="true">{{unreadLabel}}</span></sc-if>
+      </button></div>
     <div style="border-radius:24px;overflow:hidden;border:1.5px solid var(--line);background:#F5FAF8">
       <svg viewBox="0 0 350 210" width="100%" role="img" aria-label="Map showing three Happy Creamy shops near you" style="display:block">
         <rect width="350" height="210" fill="#F5FAF8"/>
@@ -291,6 +311,7 @@ body{display:flex;justify-content:center;align-items:flex-start;padding:24px 0}
               <span style="font-weight:800;font-size:13px;color:var(--muted)">{{b.km}} km</span>
             </span>
             <span style="font-weight:600;font-size:13.5px;color:var(--muted)">{{b.addr}}</span>
+            <span style="font-weight:600;font-size:13px;color:var(--muted)">Open daily 08:00 to 22:00</span>
             <span class="bd {{b.stCls}}" style="align-self:flex-start;margin-top:2px">{{b.status}}</span>
           </button>
           <div style="display:flex;gap:8px">
@@ -306,7 +327,10 @@ body{display:flex;justify-content:center;align-items:flex-start;padding:24px 0}
   <!-- ACCOUNT -->
   <sc-if value="{{isAccount}}" hint-placeholder-val="{{ false }}">
   <div style="padding:22px 20px 28px;display:flex;flex-direction:column;gap:18px">
-    <h1 style="font-size:28px">Account</h1>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px"><h1 style="font-size:28px">Account</h1><button type="button" class="bell" aria-label="{{bellAria}}" onClick="{{openNotifs}}">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0F4A45" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 9a6 6 0 1 1 12 0c0 6 2 7.5 2 7.5H4S6 15 6 9z"/><path d="M10 20a2 2 0 0 0 4 0"/></svg>
+        <sc-if value="{{hasUnread}}" hint-placeholder-val="{{ false }}"><span class="badge" aria-hidden="true">{{unreadLabel}}</span></sc-if>
+      </button></div>
     <div style="display:flex;align-items:center;gap:14px">
       <div class="tile t3" style="width:60px;height:60px;border-radius:50%;font-family:Fredoka;font-weight:600;font-size:24px;color:var(--pink)">N</div>
       <div style="min-width:0">
@@ -368,6 +392,13 @@ body{display:flex;justify-content:center;align-items:flex-start;padding:24px 0}
           <span style="font-size:13.5px;color:var(--muted);font-weight:600">{{r.value}}</span>
         </div>
       </sc-for>
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:72px;padding:8px 0;border-bottom:1.5px solid var(--line)">
+        <div style="min-width:0">
+          <div id="pushlbl" style="font-weight:700">Push notifications</div>
+          <div style="font-size:12.5px;color:var(--muted);font-weight:600;line-height:1.35">Order updates and rating requests. Your notification list fills either way. On iPhone Safari, add Happy Creamy to your Home Screen first.</div>
+        </div>
+        <button type="button" role="switch" aria-labelledby="pushlbl" aria-checked="{{pushAria}}" class="swbtn {{pushCls}}" onClick="{{togglePush}}"><span class="swtrack"><span class="swknob"></span></span></button>
+      </div>
     </div>
     <button type="button" class="btn ghost" onClick="{{logout}}">Log out</button>
   </div>
@@ -756,14 +787,48 @@ body{display:flex;justify-content:center;align-items:flex-start;padding:24px 0}
 </div>
 </sc-if>
  
+<!-- ============ NOTIFICATIONS ============ -->
+<sc-if value="{{showNotifs}}" hint-placeholder-val="{{ false }}">
+<div style="position:absolute;inset:0;z-index:27;background:#F6FBF9;display:flex;flex-direction:column">
+  <div style="display:flex;align-items:center;gap:6px;padding:14px 12px 8px;flex:none">
+    <button type="button" aria-label="Back" onClick="{{closeNotifs}}" style="width:44px;height:44px;display:flex;align-items:center;justify-content:center">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0F4A45" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
+    </button>
+    <h1 style="font-size:24px;flex:1">Notifications</h1>
+    <sc-if value="{{canMarkAll}}" hint-placeholder-val="{{ true }}">
+      <button type="button" class="link" style="min-height:44px;padding:0 8px;font-size:14px" onClick="{{markAll}}">Mark all as read</button>
+    </sc-if>
+  </div>
+  <div class="noscroll" style="flex:1;min-height:0;overflow-y:auto;padding:4px 20px 20px;display:flex;flex-direction:column;gap:10px">
+    <sc-if value="{{noNotifs}}" hint-placeholder-val="{{ false }}">
+      <div class="card" style="padding:24px;font-weight:600;color:var(--muted);line-height:1.45">No notifications yet. Order updates and rating requests will show up here.</div>
+    </sc-if>
+    <sc-for list="{{notifs}}" as="n" hint-placeholder-count="3">
+      <button type="button" class="card {{n.cls}}" onClick="{{n.open}}" style="padding:14px;display:flex;gap:12px;align-items:flex-start">
+        <span class="tile t0" style="width:40px;height:40px;border-radius:12px;flex:none">
+          <sc-if value="{{n.isFb}}" hint-placeholder-val="{{ false }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A766E" stroke-width="2" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></svg></sc-if>
+          <sc-if value="{{n.isSt}}" hint-placeholder-val="{{ true }}"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A766E" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg></sc-if>
+        </span>
+        <span style="flex:1;min-width:0;display:flex;flex-direction:column;gap:2px">
+          <span style="font-weight:800;font-size:15px;line-height:1.25">{{n.title}}</span>
+          <span style="font-weight:600;font-size:13.5px;color:var(--muted);line-height:1.35">{{n.msg}}</span>
+          <span style="font-weight:700;font-size:12.5px;color:var(--muted);margin-top:2px">{{n.meta}}</span>
+        </span>
+        <sc-if value="{{n.unread}}" hint-placeholder-val="{{ false }}"><span aria-hidden="true" style="width:10px;height:10px;border-radius:50%;background:var(--pink);flex:none;margin-top:6px"></span><span class="sr">Unread</span></sc-if>
+      </button>
+    </sc-for>
+  </div>
+</div>
+</sc-if>
+
 <!-- PUSH NOTIFICATION (demo) -->
 <sc-if value="{{showPush}}" hint-placeholder-val="{{ false }}">
 <button type="button" onClick="{{openPush}}" style="position:absolute;left:12px;right:12px;top:10px;z-index:45;background:#fff;border-radius:20px;border:1.5px solid var(--line);box-shadow:0 10px 28px rgba(15,74,69,.22);padding:12px 14px;display:flex;gap:12px;align-items:center">
   <span class="tile t0" style="width:40px;height:40px;border-radius:12px;flex:none;font-family:Fredoka;font-weight:600;color:var(--pink)">HC</span>
   <span style="min-width:0;display:flex;flex-direction:column">
     <span style="display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--muted)"><span>Happy Creamy</span><span>now</span></span>
-    <span style="font-weight:800;font-size:15px">How was your order?</span>
-    <span style="font-weight:600;font-size:13.5px;color:var(--muted)">Tell us about order {{placed.id}}. It takes a minute.</span>
+    <span style="font-weight:800;font-size:15px">{{push.title}}</span>
+    <span style="font-weight:600;font-size:13.5px;color:var(--muted)">{{push.msg}}</span>
   </span>
 </button>
 </sc-if>
@@ -929,6 +994,20 @@ function optionsFor(rating, type) {
   const list = rating === 0 ? [] : rating <= 2 ? PROBLEM : rating === 3 ? PRAISE.concat(PROBLEM) : PRAISE;
   return list.filter((o) => !o.del || type === 'delivery');
 }
+const FB_MSG = 'How was your ice cream? Leave a quick review to help us serve you better!';
+const SEED_NOTIFS = [
+  { id: 'n3', kind: 'fb', order: 'HC-2031', type: 'delivery', title: 'Order Delivered! 🍦', msg: FB_MSG, time: '2 days ago', read: false },
+  { id: 'n2', kind: 'fb', order: 'HC-2012', type: 'pickup', title: 'Order Completed! 🍦', msg: FB_MSG, time: '6 days ago', read: false },
+  { id: 'n1', kind: 'fb', order: 'HC-1987', type: 'delivery', title: 'Order Delivered! 🍦', msg: FB_MSG, time: '27 days ago', read: true }
+];
+function statusNotif(step, p) {
+  const pick = p.type === 'pickup';
+  const t = [['Order received', 'We have your order and the shop is on it.'], ['Preparing your order', 'We are scooping and packing.'], pick ? ['Ready for pick-up', 'Come say hi at the counter.'] : ['Out for delivery', 'Your rider is on the way.']][step];
+  return { kind: 'st', order: p.id, type: p.type, title: t[0], msg: t[1] };
+}
+function feedbackNotif(p) {
+  return { kind: 'fb', order: p.id, type: p.type, title: p.type === 'pickup' ? 'Order Completed! 🍦' : 'Order Delivered! 🍦', msg: FB_MSG };
+}
 const SLIDES = [
   { tag: 'New', title: 'Coconut Pandan has landed', sub: 'Creamy coconut, a ribbon of pandan.', cls: 'p0' },
   { tag: 'Take-away', title: 'Tubs packed in dry ice', sub: '400 ml or 1 litre, delivered frozen.', cls: 'p1' },
@@ -963,14 +1042,14 @@ class Component extends DCLogic {
     product: null, size: 'S', tops: {}, note: '', qty: 1,
     cart: [], view: 'app', orderType: 'delivery', addr: 'a2', branch: 'b1', slot: '10:45', pay: 'cod',
     placed: null, orderStep: 0, countdown: 600, ordersTab: 'active', toast: '', uid: 1,
-    fb: null, sent: {}, push: false
+    fb: null, sent: {}, pushId: null, pushOn: true, notifs: SEED_NOTIFS, nid: 100
   };
  
   componentDidMount() {
     this.timer = setInterval(() => {
       const s = this.state;
       if (s.view === 'tracking' && s.orderStep === -1) {
-        if (s.countdown <= 1) this.setState({ countdown: 0, orderStep: -2 });
+        if (s.countdown <= 1) this.notify({ countdown: 0, orderStep: -2 }, { kind: 'st', order: s.placed.id, type: s.placed.type, title: 'Order cancelled', msg: 'We didn\'t get your payment in 10 minutes, so we cancelled order ' + s.placed.id + '.' });
         else this.setState({ countdown: s.countdown - 1 });
       }
     }, 1000);
@@ -980,12 +1059,42 @@ class Component extends DCLogic {
   showToast(msg) {
     this.setState({ toast: msg });
     clearTimeout(this.toastTimer);
-    this.toastTimer = setTimeout(() => this.setState({ toast: '' }), 1800);
+    this.toastTimer = setTimeout(() => this.setState({ toast: '' }), 2400);
   }
  
+  notify(extra, n) {
+    const s = this.state;
+    const item = { read: false, time: 'Just now', ...n, id: 'n' + s.nid };
+    this.setState({ ...extra, notifs: [item, ...s.notifs], nid: s.nid + 1, pushId: s.pushOn ? item.id : s.pushId });
+    clearTimeout(this.pushTimer);
+    if (s.pushOn) this.pushTimer = setTimeout(() => this.setState({ pushId: null }), 6000);
+  }
+
+  openNotif(n) {
+    const s = this.state, p = s.placed;
+    clearTimeout(this.pushTimer);
+    const base = { notifs: s.notifs.map((x) => (x.id === n.id ? { ...x, read: true } : x)), pushId: null };
+    if (n.kind === 'st') {
+      const active = !!p && p.id === n.order && s.orderStep < 3;
+      this.setState({ ...base, view: 'app', tab: 'account', ordersTab: active ? 'active' : 'history' });
+      return;
+    }
+    const ago = p && p.id === n.order ? 0 : (HISTORY.find((h) => h.id === n.order) || { ago: 0 }).ago;
+    if (s.sent[n.order]) {
+      this.setState({ ...base, view: 'app', tab: 'account', ordersTab: 'history' });
+      this.showToast('Feedback already sent');
+    } else if (ago >= 7) {
+      this.setState({ ...base, view: 'app', tab: 'account', ordersTab: 'history' });
+      this.showToast('The 7-day window has ended');
+    } else {
+      this.setState(base);
+      this.openFeedback(n.order, n.type, 'app');
+    }
+  }
+
   openFeedback(id, type, from) {
     clearTimeout(this.pushTimer);
-    this.setState({ view: 'feedback', push: false, fb: { id, type, from, rating: 0, opts: {}, comment: '', photos: [], pn: 0, err: '' } });
+    this.setState({ view: 'feedback', pushId: null, fb: { id, type, from, rating: 0, opts: {}, comment: '', photos: [], pn: 0, err: '' } });
   }
   patchFb(o) { this.setState({ fb: { ...this.state.fb, ...o } }); }
  
@@ -1031,6 +1140,11 @@ class Component extends DCLogic {
     const reg = s.authMode === 'register';
     const emailShown = s.email || 'nhung@example.com';
  
+    /* ---------- notifications ---------- */
+    const unread = s.notifs.filter((n) => !n.read).length;
+    const notifList = s.notifs.map((n) => ({ ...n, cls: n.read ? '' : 'unread', isFb: n.kind === 'fb', isSt: n.kind === 'st', unread: !n.read, meta: 'Order ' + n.order + ' · ' + n.time, open: () => this.openNotif(n) }));
+    const pushN = s.pushId ? s.notifs.find((n) => n.id === s.pushId) : null;
+
     /* ---------- nav ---------- */
     const overlay = s.view !== 'app' || !!s.product;
     const nav = { home: s.tab === 'home' ? 'on' : '', menu: s.tab === 'menu' ? 'on' : '', stores: s.tab === 'stores' ? 'on' : '', account: s.tab === 'account' ? 'on' : '' };
@@ -1164,7 +1278,15 @@ class Component extends DCLogic {
       toggleAuth: () => this.setState({ authMode: reg ? 'login' : 'register' }),
       submitAuth: () => (reg ? this.setState({ authStep: 'otp', otp: '' }) : this.setState({ signedIn: true })),
       verifyOtp: () => this.setState({ signedIn: true, authStep: 'form', authMode: 'login' }),
-      logout: () => this.setState({ signedIn: false, tab: 'home', cart: [], placed: null, view: 'app', fb: null, push: false }),
+      logout: () => this.setState({ signedIn: false, tab: 'home', cart: [], placed: null, view: 'app', fb: null, pushId: null }),
+
+      bellAria: unread ? 'Notifications, ' + unread + ' unread' : 'Notifications', hasUnread: unread > 0, unreadLabel: unread > 99 ? '99+' : String(unread),
+      openNotifs: set({ view: 'notifs' }), closeNotifs: set({ view: 'app' }),
+      showNotifs: s.view === 'notifs', notifs: notifList, noNotifs: notifList.length === 0, canMarkAll: unread > 0,
+      markAll: () => this.setState({ notifs: s.notifs.map((n) => ({ ...n, read: true })) }),
+      pushOn: s.pushOn, pushAria: String(s.pushOn), pushCls: s.pushOn ? 'on' : '',
+      togglePush: () => { this.setState({ pushOn: !s.pushOn, pushId: null }); this.showToast(s.pushOn ? 'Push notifications off' : 'Push notifications on'); },
+      showPush: !!pushN, push: pushN ? { title: pushN.title, msg: pushN.msg } : { title: '', msg: '' }, openPush: () => pushN && this.openNotif(pushN),
  
       nav, showNav: !overlay,
       goHome: set({ tab: 'home' }), goMenu: set({ tab: 'menu' }), goStores: set({ tab: 'stores' }), goAccount: set({ tab: 'account' }),
@@ -1223,7 +1345,8 @@ class Component extends DCLogic {
           typeLabel: del ? 'Delivery' : 'Pick-up', payLabel: pay.label,
           where: del ? 'To ' + a.name + ', ' + a.line : b.name + ' at ' + s.slot, online: s.pay !== 'cod', payId: s.pay
         };
-        this.setState({ placed: p, view: 'tracking', cart: [], orderStep: p.online ? -1 : 0, countdown: 600 });
+        const patch = { placed: p, view: 'tracking', cart: [], orderStep: p.online ? -1 : 0, countdown: 600 };
+        if (p.online) this.setState(patch); else this.notify(patch, statusNotif(0, p));
       },
  
       showTracking: s.view === 'tracking' && !!placed,
@@ -1234,12 +1357,10 @@ class Component extends DCLogic {
       timeline,
       advanceLabel: s.orderStep >= 3 ? 'Order complete' : 'Demo: next status',
       advance: () => {
-        if (s.orderStep === -1) this.setState({ orderStep: 0 });
-        else if (s.orderStep === 2) {
-          this.setState({ orderStep: 3, push: true });
-          clearTimeout(this.pushTimer);
-          this.pushTimer = setTimeout(() => this.setState({ push: false }), 8000);
-        } else if (s.orderStep < 3) this.setState({ orderStep: s.orderStep + 1 });
+        // Every status change adds a bell item; Completed adds only the feedback request.
+        if (s.orderStep === -1) this.notify({ orderStep: 0 }, statusNotif(0, placed));
+        else if (s.orderStep === 2) this.notify({ orderStep: 3 }, feedbackNotif(placed));
+        else if (s.orderStep >= 0 && s.orderStep < 3) this.notify({ orderStep: s.orderStep + 1 }, statusNotif(s.orderStep + 1, placed));
       },
       leaveTracking: set({ view: 'app', tab: 'menu' }),
  
@@ -1263,7 +1384,6 @@ class Component extends DCLogic {
       showRateCard: s.orderStep === 3 && !!placed && !s.sent[placed.id],
       showSentCard: s.orderStep === 3 && !!placed && !!s.sent[placed.id],
       rateFromTracking: () => this.openFeedback(placed.id, placed.type, 'tracking'),
-      showPush: s.push && !!placed, openPush: () => this.openFeedback(placed.id, placed.type, 'tracking'),
  
       hasToast: !!s.toast, toast: s.toast
     };
