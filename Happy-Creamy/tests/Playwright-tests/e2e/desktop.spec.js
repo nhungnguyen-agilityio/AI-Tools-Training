@@ -872,6 +872,8 @@ test.describe('Notifications', () => {
   test('TC-HC25-04 the badge stays readable above 9 unread', async ({ page }) => {
     for (let i = 0; i < 2; i++) {
       await nav(page, 'Menu').click();
+      // Two cups (50,000đ): one cup is 25,000đ, below the 30,000đ minimum for delivery, so Checkout would be disabled.
+      await page.getByRole('button', { name: 'Add Mint Cloud Cup' }).click();
       await page.getByRole('button', { name: 'Add Mint Cloud Cup' }).click();
       await checkoutBtn(page).click();
       await nav(page, 'Account').click();
@@ -1267,8 +1269,10 @@ test.describe('Account and history (more cases)', () => {
     await signIn(page);
     await goVietnamese(page);
     await page.getByRole('button', { name: /^Thông báo/ }).click();
-    await expect(items(page).first()).toContainText('Đơn hàng đã hoàn thành! 🍦');
-    await expect(items(page).first()).toContainText('Bạn thấy kem hôm nay thế nào? Chia sẻ phản hồi ngay để giúp shop nâng cao dịch vụ nhé!');
+    // In Vietnamese the dialog name changes, so panel() (named 'Notifications') does not match.
+    const first = page.getByRole('dialog', { name: 'Thông báo' }).locator('.nitem').first();
+    await expect(first).toContainText('Đơn hàng đã hoàn thành! 🍦');
+    await expect(first).toContainText('Bạn thấy kem hôm nay thế nào? Chia sẻ phản hồi ngay để giúp shop nâng cao dịch vụ nhé!');
   });
 
   test('TC-HC26-09 the read state is kept after a refresh', async ({ page }) => {

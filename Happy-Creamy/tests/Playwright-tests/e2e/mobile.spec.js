@@ -19,8 +19,10 @@ const bell = (page) => page.getByRole('button', { name: /^Notifications/ });
 const back = (page) => page.getByRole('button', { name: 'Back', exact: true });
 const toast = (page) => page.getByRole('status');
 const notifItems = (page) => page.locator('button.card').filter({ hasText: /Order HC-\d+ · / });
-const fbChips = (page) => page.locator('.chip').filter({ hasNotText: /^(Active orders|Order history)$/ });
-const pickedChips = (page) => page.locator('.chip.on').filter({ hasNotText: /^(Active orders|Order history)$/ });
+// The Account tab also has chips (Active orders, Order history, English, Tiếng Việt); only the feedback options are wanted here.
+const NOT_FB = /^(Active orders|Order history|English|Tiếng Việt)$/;
+const fbChips = (page) => page.locator('.chip').filter({ hasNotText: NOT_FB });
+const pickedChips = (page) => page.locator('.chip.on').filter({ hasNotText: NOT_FB });
 const pushBanner = (page) => page.locator('button').filter({ hasText: /HC\s*Happy Creamy\s*now/ });
 const sheetAdd = (page) => page.getByRole('button', { name: /^Add to cart/ });
 const placeOrder = (page) => page.getByRole('button', { name: /^Place order/ });
@@ -469,6 +471,7 @@ test.describe('Cart and checkout totals', () => {
     await addToCart(page, { name: 'Mint Cloud Cup' });
     await page.reload();
     await expect(page.getByText('Sign in to start scooping.')).toBeHidden();
+    await nav(page, 'Menu').click(); // the open tab is not kept, and the cart bar only shows on Menu
     await expect(page.getByRole('button', { name: /^View cart/ })).toBeVisible();
   });
 
@@ -617,7 +620,8 @@ test.describe('Payment and pick-up', () => {
 
   test('TC-HC12-05 / TC-HC12-12 no payment for 10 minutes cancels the order for good @clock', async ({ page }) => {
     await page.clock.install({ time: new Date('2026-11-09T10:00:00') });
-    await signIn(page);
+    await page.reload(); // already signed in by beforeEach and kept in storage; reload so the app runs on the new clock
+    await expect(page.getByRole('heading', { name: 'Quick picks' })).toBeVisible();
     await place(page, { pay: 'MoMo wallet' });
     await page.clock.runFor('10:02');
     await expect(page.getByText('Order cancelled', { exact: true }).first()).toBeVisible();
@@ -633,7 +637,8 @@ test.describe('Payment and pick-up', () => {
 
   test('TC-HC12-10 the countdown continues after leaving the payment screen @clock', async ({ page }) => {
     await page.clock.install({ time: new Date('2026-11-09T10:00:00') });
-    await signIn(page);
+    await page.reload(); // already signed in by beforeEach and kept in storage; reload so the app runs on the new clock
+    await expect(page.getByRole('heading', { name: 'Quick picks' })).toBeVisible();
     await place(page, { pay: 'MoMo wallet' });
     await page.clock.runFor('02:00');
     await backFromTracking(page);
@@ -805,7 +810,8 @@ test.describe('Order tracking and history', () => {
 
   test('TC-HC17-06 / TC-HC19-06 a cancelled unpaid order leaves Active orders and is hidden from history @clock', async ({ page }) => {
     await page.clock.install({ time: new Date('2026-11-09T10:00:00') });
-    await signIn(page);
+    await page.reload(); // already signed in by beforeEach and kept in storage; reload so the app runs on the new clock
+    await expect(page.getByRole('heading', { name: 'Quick picks' })).toBeVisible();
     await place(page, { pay: 'MoMo wallet' });
     await page.clock.runFor('10:02');
     await backFromTracking(page);
@@ -1227,7 +1233,8 @@ test.describe('Notifications', () => {
 
   test('TC-HC18-12 / TC-HC24-09 a cancelled unpaid order adds a cancel item and no feedback item @clock', async ({ page }) => {
     await page.clock.install({ time: new Date('2026-11-09T10:00:00') });
-    await signIn(page);
+    await page.reload(); // already signed in by beforeEach and kept in storage; reload so the app runs on the new clock
+    await expect(page.getByRole('heading', { name: 'Quick picks' })).toBeVisible();
     await place(page, { pay: 'MoMo wallet' });
     await page.clock.runFor('10:02');
     await backFromTracking(page);
@@ -1289,7 +1296,9 @@ test.describe('Authentication (more cases)', () => {
     await page.reload();
     await loginWith(page, 'nhung@example.com', 'Kem12345');
     await expect(alert(page)).toContainText('Verify your email first');
-    await expect(page.getByRole('heading', { name: 'Quick picks' })).toBeHidden();
+    // Home is still drawn behind the sign-in screen, so check the code screen is shown instead.
+    await expect(page.getByRole('heading', { name: 'Check your email' })).toBeVisible();
+    await expect(page.getByRole('textbox', { name: 'Verification code' })).toBeVisible();
   });
 
   test('TC-HC2-13 a code entered at 9:59 is accepted @clock', async ({ page }) => {
@@ -1306,7 +1315,7 @@ test.describe('Authentication (more cases)', () => {
     await page.clock.runFor('10:01');
     await verify(page, '123456');
     await expect(alert(page)).toContainText('expired');
-    await expect(page.getByRole('heading', { name: 'Quick picks' })).toBeHidden();
+    await expect(page.getByRole('heading', { name: 'Check your email' })).toBeVisible();
     await page.getByRole('button', { name: 'Send a new code' }).click();
     await verify(page, '123456');
     await expect(page.getByRole('heading', { name: 'Quick picks' })).toBeVisible();
@@ -1362,7 +1371,7 @@ test.describe('Authentication (more cases)', () => {
     await resetWith(page, code, 'Kem54321');
     await loginWith(page, 'nhung@example.com', 'Kem12345');
     await expect(alert(page)).toContainText('Email or password is not right');
-    await expect(page.getByRole('heading', { name: 'Quick picks' })).toBeHidden();
+    await expect(page.locator('#email')).toBeVisible(); // still on the sign-in screen
   });
 
   test('TC-HC3-05 a new password of 7 characters is refused', async ({ page }) => {
